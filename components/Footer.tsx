@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Heart } from "lucide-react";
+import { Github, Linkedin, Mail, Heart, Code } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -15,11 +15,22 @@ export default function Footer() {
           </div>
 
           {/* Copyright */}
-          <p className="text-[#737373] text-sm flex items-center gap-1">
-            &copy; {currentYear} Souhaib Harrabi. Built with
-            <Heart size={14} className="text-red-500 fill-red-500" />
-            using Next.js
-          </p>
+          <div className="text-center">
+            <p className="text-[#737373] text-sm flex items-center gap-1">
+              &copy; {currentYear} Souhaib Harrabi. Built with
+              <Heart size={14} className="text-red-500 fill-red-500" />
+              using Next.js
+            </p>
+            <a
+              href="https://github.com/CodeBySouhaib/portfolio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-[#525252] hover:text-[#3B82F6] transition-colors flex items-center justify-center gap-1 mt-1"
+            >
+              <Code size={12} />
+              Yes, I built this myself. Here's the source code.
+            </a>
+          </div>
 
           {/* Social Links */}
           <div className="flex items-center gap-4">
