@@ -1,14 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, MapPin, Briefcase } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, Briefcase, Download } from "lucide-react";
+import ParticleBackground from "./ParticleBackground";
+import Terminal from "./Terminal";
 
 export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden py-20"
     >
+      {/* Particle Background */}
+      <ParticleBackground />
+
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-transparent" />
       
@@ -43,8 +48,8 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4"
           >
-            Souhaib{" "}
-            <span className="gradient-text">Harrabi</span>
+            <span className="glitch" data-text="Souhaib">Souhaib</span>{" "}
+            <span className="glitch gradient-text" data-text="Harrabi">Harrabi</span>
           </motion.h1>
 
           {/* Title with typing effect */}
@@ -140,12 +145,23 @@ export default function Hero() {
               View My Work
             </a>
             <a
+              href="/resume.pdf"
+              download="Souhaib_Harrabi_Resume.pdf"
+              className="px-8 py-3 bg-[#171717] border border-[#262626] font-medium rounded-lg hover:border-[#3B82F6] transition-colors flex items-center gap-2"
+            >
+              <Download size={18} />
+              Download CV
+            </a>
+            <a
               href="#contact"
               className="px-8 py-3 bg-[#171717] border border-[#262626] font-medium rounded-lg hover:border-[#3B82F6] transition-colors"
             >
               Get in Touch
             </a>
           </motion.div>
+
+          {/* Interactive Terminal */}
+          <Terminal />
         </div>
       </div>
 
