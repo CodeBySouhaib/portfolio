@@ -7,6 +7,19 @@ import { Building2, Calendar, MapPin } from "lucide-react";
 
 const experiences = [
   {
+    title: "PFE Intern (Projet de Fin d'Études)",
+    company: "Awel",
+    location: "Djerba, Tunisia",
+    period: "January 2025 – June 2025",
+    description: [
+      "Built Soukify, a multi-vendor e-commerce platform with 70% backend and 30% frontend development focus",
+      "Implemented real-time features using SignalR for live notifications, chat, and inventory updates",
+      "Developed comprehensive modules: product catalog, vendor management, order processing, and JWT/RBAC authentication",
+      "Conducted extensive integration testing and manual QA to identify edge cases and missing features",
+    ],
+    technologies: ["ASP.NET Core 8", "Vue.js 3", "TypeScript", "SignalR", "PostgreSQL", "JWT", "Docker"],
+  },
+  {
     title: "Backend Developer Intern",
     company: "Bank Zitouna",
     location: "Tunis, Tunisia",

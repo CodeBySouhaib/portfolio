@@ -22,12 +22,20 @@ const education = [
     description:
       "Comprehensive program in information technologies and computer science. Capstone project: full-stack e-commerce platform with ASP.NET Core, Vue.js 3, PostgreSQL, and Docker.",
   },
+  {
+    degree: "Baccalauréat Informatique",
+    institution: "Lycée Mixte de Sidi Bouzid",
+    period: "2021 – 2022",
+    status: "Completed",
+    description:
+      "High school diploma specializing in Computer Science. Foundation in programming, algorithms, and computer systems.",
+  },
 ];
 
 const languages = [
-  { name: "Arabic", level: "Native" },
-  { name: "English", level: "Professional" },
-  { name: "French", level: "Professional" },
+  { name: "Arabic", level: "Native", percentage: 100 },
+  { name: "English", level: "Intermediate", percentage: 60 },
+  { name: "French", level: "Intermediate", percentage: 60 },
 ];
 
 export default function Education() {
@@ -107,11 +115,19 @@ export default function Education() {
               <h3 className="text-lg font-bold text-[#e5e5e5] mb-4 font-mono">
                 {`// Languages`}
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {languages.map((lang) => (
-                  <div key={lang.name} className="flex items-center justify-between">
-                    <span className="text-[#e5e5e5]">{lang.name}</span>
-                    <span className="text-[#737373] text-sm">{lang.level}</span>
+                  <div key={lang.name}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[#e5e5e5]">{lang.name}</span>
+                      <span className="text-[#737373] text-sm">{lang.level}</span>
+                    </div>
+                    <div className="w-full bg-[#262626] rounded-full h-2">
+                      <div
+                        className="bg-[#3B82F6] h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${lang.percentage}%` }}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -135,6 +151,13 @@ export default function Education() {
                     strategic mindset.
                   </p>
                 </div>
+                <div className="p-3 bg-[#0a0a0a] rounded-lg border border-[#262626]">
+                  <p className="text-[#e5e5e5] font-medium mb-1">Musculation</p>
+                  <p className="text-[#737373] text-sm">
+                    Gym & weight training to build strength, endurance, and maintain
+                    a healthy lifestyle.
+                  </p>
+                </div>
               </div>
             </motion.div>
 
@@ -150,6 +173,7 @@ export default function Education() {
               </h3>
               <ul className="space-y-2">
                 {[
+                  "Get rich or debug trying 💰",
                   "Contribute to open-source",
                   "Land a software engineering role",
                   "Learn AWS/Azure",

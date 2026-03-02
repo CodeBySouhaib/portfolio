@@ -1,29 +1,106 @@
 ---
-title: "Building a Full-Stack E-Commerce Platform with ASP.NET Core and Vue.js"
+title: "Building Soukify: A Multi-Vendor E-Commerce Platform with ASP.NET Core & Vue.js"
 date: "2025-06-15"
-excerpt: "A deep dive into building a production-ready e-commerce platform featuring JWT authentication, real-time chat, and Docker deployment."
-tags: ["ASP.NET Core", "Vue.js", "Docker", "SignalR"]
+excerpt: "Deep dive into building a production-ready B2B marketplace featuring multi-vendor architecture, real-time SignalR chat, quote-to-invoice workflows, and commission tracking."
+tags: ["ASP.NET Core", "Vue.js", "SignalR", "PostgreSQL", "TypeScript"]
 ---
 
-# Building a Full-Stack E-Commerce Platform
+# Building Soukify: A Multi-Vendor E-Commerce Marketplace
 
-For my capstone project (PFE 2025), I built a complete e-commerce platform from scratch. Here's what I learned along the way.
+During my PFE internship at **Awel**, I built **Soukify** — a full-featured B2B multi-vendor marketplace from scratch. Not a simple CRUD app, but a real platform with 37 database entities, 3 user roles, real-time chat, quote/invoice generation, and a commission tracking system.
 
-## The Tech Stack
+Here's the technical deep dive into what I built and what I learned.
 
-- **Backend**: ASP.NET Core Web API with Clean Architecture
-- **Frontend**: Vue.js 3 with Composition API and Pinia
-- **Database**: Neon (Serverless PostgreSQL)
-- **Real-time**: SignalR for chat functionality
-- **DevOps**: Docker + Docker Compose
+## The Scale
 
-## Key Challenges
+Before diving in, let me give you an idea of the scope:
 
-### 1. Authentication & Authorization
+- **37 Entity Models** — Users, Products, Orders, SubOrders, Devis (Quotes), Factures (Invoices), Chat messages, and more
+- **3 User Roles** — Admin, EntrepriseAdmin, Client with distinct permissions
+- **25+ API Controllers** — Organized into Admin, Auth, Catalog, Client, and Entreprise modules
+- **Real-time Features** — SignalR-powered chat with delivery/seen status
+- **PDF Generation** — Automated quotes and invoices
+- **Mobile Ready** — Capacitor integration for Android/iOS
 
-Implementing JWT with refresh tokens and role-based access control (RBAC) was crucial for security. I used ASP.NET Core Identity combined with custom JWT middleware.
+## Tech Stack
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Frontend: Vue.js 3 + TypeScript + Pinia + Capacitor        │
+├─────────────────────────────────────────────────────────────┤
+│  Real-time: SignalR WebSocket Hub                           │
+├─────────────────────────────────────────────────────────────┤
+│  Backend: ASP.NET Core 8 Web API                            │
+├─────────────────────────────────────────────────────────────┤
+│  Database: PostgreSQL (Neon Serverless)                     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Multi-Vendor Architecture
+
+The core challenge was designing a system where multiple **Entreprises** (vendors) can operate independently while sharing a unified storefront.
+
+### Enterprise Hierarchy
+
+Each enterprise has an **Owner** and can have multiple **Admins** with an approval workflow:
 
 ```csharp
+public class Entreprise
+{
+    public int Id { get; set; }
+    public string CompanyName { get; set; }
+    public string Description { get; set; }
+    public string Logo { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Address { get; set; }
+    public bool IsApproved { get; set; }
+    public int OwnerId { get; set; }
+    public User Owner { get; set; }
+    public ICollection<EntrepriseAdmin> Admins { get; set; }
+    public ICollection<Product> Products { get; set; }
+}
+```
+
+When a new admin requests to join an enterprise, the owner must approve them. This prevents unauthorized access to vendor dashboards and inventory.
+
+### Product System with Dynamic Characteristics
+
+Products aren't just name + price. Each product has:
+
+```csharp
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public decimal Price { get; set; }
+    public decimal? DiscountedPrice { get; set; }
+    public int Stock { get; set; }
+    public string Sku { get; set; }
+    public string Marque { get; set; }        // Brand
+    public string Taille { get; set; }        // Size
+    public decimal? Poids { get; set; }       // Weight
+    public decimal VatRate { get; set; }      // VAT percentage
+    public decimal ShippingCost { get; set; }
+    public bool FreeShipping { get; set; }
+    public decimal CommissionRate { get; set; }
+    public int? CategoryId { get; set; }
+    public int? DomainId { get; set; }
+    public int EntrepriseId { get; set; }
+    public ICollection<ProductCharacteristic> Characteristics { get; set; }
+}
+```
+
+The `ProductCharacteristic` model allows vendors to add custom key-value attributes without schema changes.
+
+## Hybrid Authentication System
+
+I implemented a **dual authentication strategy**: JWT for user sessions and API Keys for programmatic access.
+
+### JWT + API Key Middleware
+
+```csharp
+// Users authenticate with JWT tokens
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
         options.TokenValidationParameters = new TokenValidationParameters {
@@ -31,31 +108,390 @@ services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            // ... configuration
+            ValidIssuer = configuration["Jwt:Issuer"],
+            ValidAudience = configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
         };
     });
+
+// API Keys for SignalR and external integrations
+public class ApiKeyService
+{
+    public string GenerateApiKey(int userId) { /* ... */ }
+    public User? ValidateApiKey(string apiKey) { /* ... */ }
+}
 ```
 
-### 2. Real-time Chat with SignalR
+### Email Verification Flow
 
-SignalR made implementing real-time features surprisingly straightforward. The Vue.js integration with Pinia for state management kept the frontend reactive and clean.
+New users receive a **6-digit verification code** via email. The `VerificationCode` model tracks:
 
-### 3. Docker Deployment
+- Code value and expiration
+- User association
+- Used/unused status
 
-Containerizing both frontend and backend with Docker Compose simplified deployment significantly. Environment variables handled the configuration differences between development and production.
+This prevents fake account creation and ensures valid contact information.
+
+## Real-Time Chat with SignalR
+
+The chat system was one of the most complex features. Users can message vendors directly, and conversations can be **product-specific**.
+
+### ChatHub Implementation
+
+```csharp
+public class ChatHub : Hub
+{
+    public async Task SendMessage(int receiverId, string content)
+    {
+        var senderId = GetUserIdFromApiKey();
+        var message = new ChatMessage
+        {
+            SenderId = senderId,
+            ReceiverId = receiverId,
+            Content = content,
+            SentAt = DateTime.UtcNow,
+            IsDelivered = false,
+            IsSeen = false
+        };
+        
+        await _context.ChatMessages.AddAsync(message);
+        await _context.SaveChangesAsync();
+        
+        // Real-time delivery to recipient
+        await Clients.User(receiverId.ToString())
+            .SendAsync("ReceiveMessage", message);
+    }
+
+    public async Task SendMessageWithProduct(
+        int receiverId, 
+        string content, 
+        int productId)
+    {
+        // Same as above, but with product context
+        // Allows "Ask about this product" feature
+    }
+
+    public async Task MarkMessageAsSeen(int messageId)
+    {
+        var message = await _context.ChatMessages.FindAsync(messageId);
+        message.IsSeen = true;
+        message.SeenAt = DateTime.UtcNow;
+        await _context.SaveChangesAsync();
+        
+        // Notify sender that their message was seen
+        await Clients.User(message.SenderId.ToString())
+            .SendAsync("MessageSeen", messageId);
+    }
+}
+```
+
+### Frontend Integration with Pinia
+
+```typescript
+// stores/chatStore.ts
+export const useChatStore = defineStore('chat', {
+  state: () => ({
+    activeChats: [] as ActiveChat[],
+    currentChat: null as ChatMessage[] | null,
+    unreadCount: 0,
+    connection: null as HubConnection | null
+  }),
+  
+  actions: {
+    async initializeSignalR(apiKey: string) {
+      this.connection = new HubConnectionBuilder()
+        .withUrl(`${API_URL}/chatHub?apiKey=${apiKey}`)
+        .withAutomaticReconnect()
+        .build();
+        
+      this.connection.on('ReceiveMessage', (message) => {
+        this.handleIncomingMessage(message);
+      });
+      
+      this.connection.on('MessageSeen', (messageId) => {
+        this.markLocalMessageAsSeen(messageId);
+      });
+      
+      await this.connection.start();
+    }
+  }
+});
+```
+
+## Quote-to-Invoice Workflow (Devis → Facture)
+
+This was a **key business requirement**. B2B transactions often require formal quotes before purchase.
+
+### The Flow
+
+```
+1. Client requests a quote (Devis) for specific products
+2. Vendor reviews and sends quote with pricing/terms
+3. Client accepts or rejects
+4. If accepted → Automatically generates Invoice (Facture)
+5. PDF documents generated at each stage
+```
+
+### Quote Model
+
+```csharp
+public class Devis
+{
+    public int Id { get; set; }
+    public string DevisNumber { get; set; }  // Auto-generated: DEV-2025-0001
+    public int ClientId { get; set; }
+    public int EntrepriseId { get; set; }
+    public DevisStatus Status { get; set; }  // Pending, Accepted, Rejected, Expired
+    public DateTime CreatedAt { get; set; }
+    public DateTime? ExpiresAt { get; set; }
+    public decimal TotalHT { get; set; }     // Before tax
+    public decimal TotalTVA { get; set; }    // Tax amount
+    public decimal TotalTTC { get; set; }    // After tax
+    public ICollection<DevisItem> Items { get; set; }
+}
+```
+
+### PDF Generation Service
+
+```csharp
+public class DevisPdfGeneratorService
+{
+    public byte[] GenerateDevisPdf(Devis devis)
+    {
+        // Uses QuestPDF or iTextSharp
+        // Generates professional quote document with:
+        // - Company letterhead
+        // - Line items with quantities and prices
+        // - Tax breakdown
+        // - Terms and conditions
+        // - Validity period
+    }
+}
+```
+
+## Order Splitting: SubOrders per Vendor
+
+When a client orders from multiple vendors, the order is **split into SubOrders**:
+
+```
+Order #1234 (Client: John)
+├── SubOrder #1234-A (Vendor: TechStore)
+│   ├── Laptop x1
+│   └── Mouse x2
+├── SubOrder #1234-B (Vendor: OfficeSupply)
+│   └── Desk Chair x1
+└── SubOrder #1234-C (Vendor: GadgetWorld)
+    └── Headphones x1
+```
+
+Each SubOrder has its own:
+- Fulfillment status (Processing, Shipped, Delivered)
+- Invoice (Facture)
+- Commission calculation
+
+```csharp
+public class SubOrder
+{
+    public int Id { get; set; }
+    public int OrderId { get; set; }
+    public int EntrepriseId { get; set; }
+    public FulfillmentStatus Status { get; set; }
+    public decimal SubTotal { get; set; }
+    public decimal Commission { get; set; }
+    public ICollection<OrderItem> Items { get; set; }
+    public Facture? Facture { get; set; }
+}
+```
+
+## Payment System
+
+Two payment methods with different workflows:
+
+### Cash on Delivery (COD)
+Simple — order is marked for COD, payment collected on delivery.
+
+### Bank Transfer with Approval
+
+```
+1. Client selects Bank Transfer
+2. Client uploads transfer receipt
+3. Admin reviews transfer in BankTransfer dashboard
+4. Admin approves/rejects
+5. Order status updates accordingly
+```
+
+```csharp
+public class BankTransfer
+{
+    public int Id { get; set; }
+    public int OrderId { get; set; }
+    public string ReceiptUrl { get; set; }
+    public decimal Amount { get; set; }
+    public bool IsApproved { get; set; }
+    public DateTime? ApprovedAt { get; set; }
+    public int? ApprovedByAdminId { get; set; }
+}
+```
+
+## Commission Tracking System
+
+The platform takes a commission on each sale. This required careful tracking:
+
+```csharp
+public class CommissionLog
+{
+    public int Id { get; set; }
+    public int SubOrderId { get; set; }
+    public int EntrepriseId { get; set; }
+    public decimal OrderAmount { get; set; }
+    public decimal CommissionRate { get; set; }
+    public decimal CommissionAmount { get; set; }
+    public bool IsPaid { get; set; }
+    public DateTime? PaidAt { get; set; }
+}
+```
+
+The admin dashboard shows:
+- Total commissions earned
+- Paid vs unpaid commissions per vendor
+- Commission rates by product category
+
+## Smart Product Filtering
+
+The filtering system goes beyond basic category filters:
+
+```csharp
+[HttpGet("filter")]
+public async Task<IActionResult> FilterProducts(
+    [FromQuery] int? domainId,
+    [FromQuery] int? categoryId,
+    [FromQuery] decimal? minPrice,
+    [FromQuery] decimal? maxPrice,
+    [FromQuery] bool? hasDiscount,
+    [FromQuery] bool? inStock,
+    [FromQuery] decimal? minRating,
+    [FromQuery] string? sortBy,  // price, rating, bestseller, newest, mostViewed
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 20)
+{
+    var query = _context.Products
+        .Include(p => p.Category)
+        .Include(p => p.Entreprise)
+        .AsQueryable();
+    
+    // Apply filters...
+    
+    // Recommendation algorithm for "recommended" sort
+    if (sortBy == "recommended")
+    {
+        query = query.OrderByDescending(p => 
+            (p.ViewCount * 0.3) + 
+            (p.AverageRating * 0.4) + 
+            (p.OrderCount * 0.3));
+    }
+    
+    return Ok(await query.ToPagedListAsync(page, pageSize));
+}
+```
+
+## Notification System
+
+Users can **follow enterprises** and get notified when new products are added:
+
+```csharp
+public class NotificationService
+{
+    public async Task NotifyFollowersOfNewProduct(Product product)
+    {
+        var followers = await _context.EntrepriseFollowers
+            .Where(f => f.EntrepriseId == product.EntrepriseId)
+            .Select(f => f.UserId)
+            .ToListAsync();
+        
+        foreach (var userId in followers)
+        {
+            await CreateNotification(userId, 
+                $"New product from {product.Entreprise.CompanyName}: {product.Name}",
+                NotificationType.NewProduct,
+                product.Id);
+        }
+    }
+}
+```
+
+Users can also **subscribe to out-of-stock products** and get notified when they're back in stock.
+
+## Analytics Dashboard
+
+The admin panel includes real-time analytics:
+
+```csharp
+[HttpGet("kpis")]
+public async Task<IActionResult> GetKPIs()
+{
+    return Ok(new {
+        TotalRevenue = await _context.Orders.SumAsync(o => o.Total),
+        TotalOrders = await _context.Orders.CountAsync(),
+        TotalUsers = await _context.Users.CountAsync(),
+        TotalEnterprises = await _context.Entreprises.CountAsync(),
+        PendingBankTransfers = await _context.BankTransfers
+            .CountAsync(bt => !bt.IsApproved),
+        UnpaidCommissions = await _context.CommissionLogs
+            .Where(c => !c.IsPaid)
+            .SumAsync(c => c.CommissionAmount)
+    });
+}
+
+[HttpGet("sales-by-category")]
+public async Task<IActionResult> GetSalesByCategory() { /* ... */ }
+
+[HttpGet("top-rated-products")]
+public async Task<IActionResult> GetTopRatedProducts() { /* ... */ }
+
+[HttpGet("revenue-overview")]
+public async Task<IActionResult> GetRevenueOverview() { /* ... */ }
+```
 
 ## Lessons Learned
 
-1. **Plan your database schema early** - Migrations are your friend
-2. **Use Clean Architecture** - It pays off as the project grows
-3. **Test your APIs** - Swagger and Postman saved me countless hours
-4. **Real-time features are addictive** - Once you add SignalR, you'll want it everywhere
+### 1. Design for Multi-tenancy Early
+The SubOrder pattern for splitting orders per vendor was a late addition. It required significant refactoring. Plan for multi-vendor complexity from day one.
+
+### 2. Real-time Features Need Careful State Management
+SignalR is powerful but managing connection state, reconnection logic, and message synchronization across tabs/devices is complex. Pinia's reactive stores were essential.
+
+### 3. PDF Generation is Harder Than It Looks
+Generating professional-looking invoices with proper formatting, localization (French/Arabic), and correct tax calculations took more time than expected.
+
+### 4. Commission Tracking Needs Audit Trail
+Every financial transaction needs timestamps, actor IDs, and status history. The `CommissionLog` model evolved multiple times to capture all necessary audit data.
+
+### 5. Type Safety Pays Off
+Using TypeScript on the frontend and strong typing in C# caught countless bugs at compile time. The Pinia stores with proper TypeScript interfaces made refactoring safe.
+
+## The Numbers
+
+After 4 months of development:
+
+- **~15,000 lines** of backend C# code
+- **~12,000 lines** of frontend TypeScript/Vue code
+- **37 database tables**
+- **25+ API controllers**
+- **10+ Pinia stores**
+- **Real production deployment** with actual vendor onboarding
 
 ## What's Next?
 
-I'm planning to add:
-- Payment integration (Stripe)
-- Admin dashboard with analytics
-- Mobile app with Flutter
+The platform is live and being used by real vendors. Future improvements include:
 
-Feel free to check out the code on my GitHub!
+- **Stripe/Flouci integration** for online payments
+- **Mobile apps** via Capacitor (already configured)
+- **Advanced analytics** with charts and exportable reports
+- **Vendor subscription tiers** with feature gating
+
+---
+
+Building Soukify taught me that enterprise software isn't about fancy frameworks — it's about solving real business problems with clean, maintainable code. The quote-to-invoice workflow alone had more edge cases than my entire university curriculum combined.
+
+If you're building a multi-vendor platform, start with your data model. Get that right, and everything else follows.

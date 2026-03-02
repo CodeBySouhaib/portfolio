@@ -6,10 +6,10 @@ import { useRef } from "react";
 import { Code2, GitPullRequest, Calendar, Languages } from "lucide-react";
 
 const stats = [
-  { icon: Code2, value: "716", label: "GitHub Contributions" },
+  { icon: Code2, value: "858", label: "GitHub Contributions" },
   { icon: GitPullRequest, value: "3x", label: "Pull Shark" },
-  { icon: Calendar, value: "2+", label: "Years Experience" },
-  { icon: Languages, value: "5+", label: "Languages" },
+  { icon: Calendar, value: "5", label: "Years Experience" },
+  { icon: Languages, value: "3", label: "Languages" },
 ];
 
 export default function About() {

@@ -3,32 +3,33 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 import { Github, ExternalLink, Star } from "lucide-react";
 
 const projects = [
   {
-    title: "Nexus E-Commerce Platform",
-    subtitle: "PFE 2025 Capstone Project",
+    title: "Soukify",
+    subtitle: "Multi-Vendor B2B Marketplace | PFE 2025 at Awel",
     description:
-      "Production-ready e-commerce platform demonstrating full-stack development, clean architecture, and modern DevOps practices with real-time features and secure authentication.",
+      "Full-featured B2B multi-vendor marketplace with 37 database entities, real-time SignalR chat, quote-to-invoice workflows, commission tracking, and smart product recommendations.",
     features: [
-      "Modular REST API with JWT/RBAC authentication",
-      "Real-time chat using SignalR websockets",
-      "Wishlist & shopping cart with real-time UI sync (Pinia)",
-      "Email verification with secure codes & SMTP integration",
-      "Product image management via Cloudinary",
-      "Fully Dockerized with clean architecture patterns",
+      "Multi-vendor architecture with enterprise hierarchy",
+      "Real-time chat with SignalR (product-specific conversations)",
+      "Quote (Devis) to Invoice (Facture) workflow with PDF generation",
+      "Bank transfer approval system with admin dashboard",
+      "Commission tracking per product/enterprise",
+      "Smart filtering with recommendation algorithm",
     ],
     technologies: [
-      "ASP.NET Core",
+      "ASP.NET Core 8",
       "Vue.js 3",
-      "Neon PostgreSQL",
-      "Docker",
+      "TypeScript",
+      "PostgreSQL",
       "SignalR",
-      "JWT",
-      "Cloudinary",
+      "Capacitor",
     ],
     github: "https://github.com/CodeBySouhaib",
+    logo: "/soukify.png",
     featured: true,
   },
   {
@@ -43,13 +44,6 @@ const projects = [
     description:
       "Mobile application for scanning documents, converting to PDF, and managing files with cloud synchronization.",
     technologies: ["Flutter", "Dart", "Document Management", "Cross-Platform"],
-    github: "https://github.com/CodeBySouhaib",
-  },
-  {
-    title: "PHP Money Transfer Platform",
-    description:
-      "Secure payment processing system with user authentication, transaction management, and financial reporting.",
-    technologies: ["PHP", "MySQL", "Payment Processing", "Security"],
     github: "https://github.com/CodeBySouhaib",
   },
   {
@@ -105,12 +99,27 @@ export default function Projects() {
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-bold text-[#e5e5e5] mb-1">
-                  {featuredProject.title}
-                </h3>
-                <p className="text-[#3B82F6] text-sm mb-4">
-                  {featuredProject.subtitle}
-                </p>
+                {/* Project Logo and Title */}
+                <div className="flex items-center gap-4 mb-4">
+                  {featuredProject.logo && (
+                    <div className="relative w-16 h-16 flex-shrink-0 bg-white rounded-xl p-2">
+                      <Image
+                        src={featuredProject.logo}
+                        alt={`${featuredProject.title} logo`}
+                        fill
+                        className="object-contain p-1"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <h3 className="text-2xl font-bold text-[#e5e5e5]">
+                      {featuredProject.title}
+                    </h3>
+                    <p className="text-[#3B82F6] text-sm">
+                      {featuredProject.subtitle}
+                    </p>
+                  </div>
+                </div>
                 <p className="text-[#737373] mb-6">{featuredProject.description}</p>
 
                 {/* Features */}
@@ -144,15 +153,18 @@ export default function Projects() {
                 </div>
 
                 {/* Links */}
-                <div className="flex gap-4">
-                  <a
-                    href={featuredProject.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-[#0a0a0a] border border-[#262626] rounded-lg text-sm hover:border-[#3B82F6] transition-colors"
-                  >
+                <div className="flex flex-wrap gap-3">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-[#0a0a0a] border border-[#262626] rounded-lg text-sm text-[#737373] cursor-default">
                     <Github size={16} />
-                    View on GitHub
+                    <span>Private Repo</span>
+                    <span className="text-xs text-[#525252]">• Contact for access</span>
+                  </div>
+                  <a
+                    href="/blog/building-ecommerce-platform"
+                    className="flex items-center gap-2 px-4 py-2 bg-[#3B82F6] text-white rounded-lg text-sm hover:bg-[#2563EB] transition-colors font-medium"
+                  >
+                    <ExternalLink size={16} />
+                    Read Case Study
                   </a>
                 </div>
               </div>

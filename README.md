@@ -9,7 +9,7 @@ A modern, dark-themed developer portfolio built with Next.js 14, React, and Tail
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/)
 
-[Live Demo](https://portfolio-souhaib.vercel.app) · [Report Bug](https://github.com/CodeBySouhaib/portfolio/issues) · [Request Feature](https://github.com/CodeBySouhaib/portfolio/issues)
+[Live Demo](https://portfolio-rho-flax-satz6z3crc.vercel.app/) · [Report Bug](https://github.com/CodeBySouhaib/portfolio/issues) · [Request Feature](https://github.com/CodeBySouhaib/portfolio/issues)
 
 </div>
 
