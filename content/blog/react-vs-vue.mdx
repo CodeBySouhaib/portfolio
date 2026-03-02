@@ -1,0 +1,59 @@
+---
+title: "Why I Switched from React to Vue.js (And When to Use Each)"
+date: "2025-04-20"
+excerpt: "After working with both frameworks extensively, here's my honest comparison and when I'd choose each one."
+tags: ["Vue.js", "React", "JavaScript", "Frontend"]
+---
+
+# Why I Switched from React to Vue.js
+
+After building several projects with both React and Vue.js, I've developed a clear preference. But it's not as simple as "Vue is better" — each has its place.
+
+## My Journey
+
+I started with React during my Tunisie Télécom internship. The component model and ecosystem were impressive, but I found myself fighting against the framework more than working with it.
+
+When I discovered Vue.js 3 with the Composition API, everything clicked.
+
+## What Vue Does Better (For Me)
+
+### 1. Single File Components
+
+```vue
+<template>
+  <div class="counter">
+    <button @click="count++">Count: {{ count }}</button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+</script>
+
+<style scoped>
+.counter { padding: 1rem; }
+</style>
+```
+
+Everything in one place. No CSS-in-JS debates. No separate files for every component.
+
+### 2. Reactivity That Makes Sense
+
+Vue's reactivity system with `ref()` and `reactive()` feels more intuitive than React's `useState` and `useEffect` dance.
+
+### 3. Pinia > Redux
+
+State management with Pinia is a joy. Compare it to Redux boilerplate and the difference is night and day.
+
+## When I'd Still Choose React
+
+- **Large enterprise teams** - More developers know React
+- **React Native projects** - The ecosystem is mature
+- **Existing React codebase** - Don't rewrite for the sake of it
+
+## The Bottom Line
+
+Use what makes you productive. For my personal projects and freelance work, Vue.js is my go-to. For client work where the team prefers React, I'm equally comfortable.
+
+The best framework is the one that helps you ship.

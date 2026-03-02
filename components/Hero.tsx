@@ -1,0 +1,169 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Github, Linkedin, Mail, MapPin, Briefcase } from "lucide-react";
+
+export default function Hero() {
+  return (
+    <section
+      id="home"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16"
+    >
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-transparent" />
+      
+      {/* Grid pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `linear-gradient(#3B82F6 1px, transparent 1px), linear-gradient(90deg, #3B82F6 1px, transparent 1px)`,
+          backgroundSize: '50px 50px'
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center">
+          {/* Terminal-style intro */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-block mb-6"
+          >
+            <div className="bg-[#171717] border border-[#262626] rounded-lg px-4 py-2 font-mono text-sm">
+              <span className="text-[#737373]">$</span>{" "}
+              <span className="text-[#3B82F6]">whoami</span>
+            </div>
+          </motion.div>
+
+          {/* Name */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4"
+          >
+            Souhaib{" "}
+            <span className="gradient-text">Harrabi</span>
+          </motion.h1>
+
+          {/* Title with typing effect */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex items-center justify-center gap-2 mb-6"
+          >
+            <span className="text-xl sm:text-2xl text-[#737373] font-mono">
+              &gt; Full Stack Developer
+              <span className="animate-blink text-[#3B82F6]">_</span>
+            </span>
+          </motion.div>
+
+          {/* Open to work badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 text-green-400 px-4 py-2 rounded-full text-sm font-medium mb-8"
+          >
+            <Briefcase size={16} />
+            Open to Work
+          </motion.div>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="max-w-2xl mx-auto text-[#737373] text-lg mb-8 leading-relaxed"
+          >
+            Building secure, scalable web and mobile applications using{" "}
+            <span className="text-[#e5e5e5]">ASP.NET Core</span>,{" "}
+            <span className="text-[#e5e5e5]">Vue.js</span>, and modern cloud technologies.
+            Passionate about clean architecture, real-time features, and DevOps practices.
+          </motion.p>
+
+          {/* Location */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="flex items-center justify-center gap-2 text-[#737373] mb-8"
+          >
+            <MapPin size={18} />
+            <span>Sidi Bouzid, Tunisia</span>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="flex items-center justify-center gap-4 mb-12"
+          >
+            <a
+              href="https://github.com/CodeBySouhaib"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 bg-[#171717] border border-[#262626] rounded-lg hover:border-[#3B82F6] hover:text-[#3B82F6] transition-all duration-300"
+            >
+              <Github size={24} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/harrabisouhaib"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 bg-[#171717] border border-[#262626] rounded-lg hover:border-[#3B82F6] hover:text-[#3B82F6] transition-all duration-300"
+            >
+              <Linkedin size={24} />
+            </a>
+            <a
+              href="mailto:harrabisouhaib@gmail.com"
+              className="p-3 bg-[#171717] border border-[#262626] rounded-lg hover:border-[#3B82F6] hover:text-[#3B82F6] transition-all duration-300"
+            >
+              <Mail size={24} />
+            </a>
+          </motion.div>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href="#projects"
+              className="px-8 py-3 bg-[#3B82F6] text-white font-medium rounded-lg hover:bg-[#2563eb] transition-colors glow"
+            >
+              View My Work
+            </a>
+            <a
+              href="#contact"
+              className="px-8 py-3 bg-[#171717] border border-[#262626] font-medium rounded-lg hover:border-[#3B82F6] transition-colors"
+            >
+              Get in Touch
+            </a>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <div className="w-6 h-10 border-2 border-[#262626] rounded-full flex justify-center">
+          <motion.div
+            animate={{ y: [0, 12, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+            className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full mt-2"
+          />
+        </div>
+      </motion.div>
+    </section>
+  );
+}

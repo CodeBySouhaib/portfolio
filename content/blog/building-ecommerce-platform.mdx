@@ -1,0 +1,61 @@
+---
+title: "Building a Full-Stack E-Commerce Platform with ASP.NET Core and Vue.js"
+date: "2025-06-15"
+excerpt: "A deep dive into building a production-ready e-commerce platform featuring JWT authentication, real-time chat, and Docker deployment."
+tags: ["ASP.NET Core", "Vue.js", "Docker", "SignalR"]
+---
+
+# Building a Full-Stack E-Commerce Platform
+
+For my capstone project (PFE 2025), I built a complete e-commerce platform from scratch. Here's what I learned along the way.
+
+## The Tech Stack
+
+- **Backend**: ASP.NET Core Web API with Clean Architecture
+- **Frontend**: Vue.js 3 with Composition API and Pinia
+- **Database**: Neon (Serverless PostgreSQL)
+- **Real-time**: SignalR for chat functionality
+- **DevOps**: Docker + Docker Compose
+
+## Key Challenges
+
+### 1. Authentication & Authorization
+
+Implementing JWT with refresh tokens and role-based access control (RBAC) was crucial for security. I used ASP.NET Core Identity combined with custom JWT middleware.
+
+```csharp
+services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => {
+        options.TokenValidationParameters = new TokenValidationParameters {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            // ... configuration
+        };
+    });
+```
+
+### 2. Real-time Chat with SignalR
+
+SignalR made implementing real-time features surprisingly straightforward. The Vue.js integration with Pinia for state management kept the frontend reactive and clean.
+
+### 3. Docker Deployment
+
+Containerizing both frontend and backend with Docker Compose simplified deployment significantly. Environment variables handled the configuration differences between development and production.
+
+## Lessons Learned
+
+1. **Plan your database schema early** - Migrations are your friend
+2. **Use Clean Architecture** - It pays off as the project grows
+3. **Test your APIs** - Swagger and Postman saved me countless hours
+4. **Real-time features are addictive** - Once you add SignalR, you'll want it everywhere
+
+## What's Next?
+
+I'm planning to add:
+- Payment integration (Stripe)
+- Admin dashboard with analytics
+- Mobile app with Flutter
+
+Feel free to check out the code on my GitHub!
