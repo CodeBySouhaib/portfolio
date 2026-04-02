@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
+import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
 import { Building2, Calendar, MapPin } from "lucide-react";
 
@@ -48,6 +49,7 @@ const experiences = [
 export default function Experience() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const reduceMotion = useReducedMotion();
 
   return (
     <section id="experience" className="py-24">
@@ -55,9 +57,9 @@ export default function Experience() {
         {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -77,9 +79,12 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <motion.div
                 key={exp.company}
-                initial={{ opacity: 0, y: 20 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                transition={getTransition(reduceMotion, {
+                  duration: 0.5,
+                  delay: index * 0.2,
+                })}
                 className={`relative md:w-1/2 ${
                   index % 2 === 0 ? "md:pr-12 md:ml-0" : "md:pl-12 md:ml-auto"
                 }`}

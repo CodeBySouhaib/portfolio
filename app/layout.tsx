@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
+import MotionProvider from "@/components/MotionProvider";
+import DevOgWarning from "@/components/DevOgWarning";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -15,15 +17,49 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const title = "Souhaib Harrabi | Full Stack & Mobile Developer";
+const description =
+  "Full Stack Developer specializing in Flutter, Supabase, ASP.NET Core, and Vue.js. Building CrowdAnswer — a social Q&A mobile app. Open to roles in Dubai & remote.";
+
 export const metadata: Metadata = {
-  title: "Souhaib Harrabi | Full Stack Developer",
-  description: "Full Stack Developer specializing in ASP.NET Core, Vue.js, React, and modern web technologies. Building secure, scalable applications.",
-  keywords: ["Full Stack Developer", "ASP.NET Core", "Vue.js", "React", "TypeScript", "Tunisia"],
+  metadataBase: new URL("https://harrabiportfolio.vercel.app"),
+  title,
+  description,
+  keywords: [
+    "Full Stack Developer",
+    "ASP.NET Core",
+    "Vue.js",
+    "React",
+    "TypeScript",
+    "Tunisia",
+    "Flutter",
+    "Supabase",
+    "CrowdAnswer",
+    "GetX",
+    "PostgreSQL",
+    "Dubai",
+    "mobile developer",
+  ],
   authors: [{ name: "Souhaib Harrabi" }],
   openGraph: {
-    title: "Souhaib Harrabi | Full Stack Developer",
-    description: "Full Stack Developer specializing in ASP.NET Core, Vue.js, React, and modern web technologies.",
+    title,
+    description,
     type: "website",
+    url: "https://harrabiportfolio.vercel.app",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Souhaib Harrabi \u2013 Full Stack & Mobile Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/og-image.png"],
   },
 };
 
@@ -37,8 +73,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0a0a0a] text-[#e5e5e5]`}
       >
-        <Navigation />
-        {children}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-cyan-500 focus:text-black focus:rounded"
+        >
+          Skip to main content
+        </a>
+        <MotionProvider>
+          <Navigation />
+          {children}
+        </MotionProvider>
+        <DevOgWarning />
         <Analytics />
         <SpeedInsights />
       </body>

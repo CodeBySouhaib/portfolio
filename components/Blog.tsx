@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
+import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
 import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
@@ -22,6 +23,7 @@ interface BlogProps {
 export default function Blog({ posts }: BlogProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const reduceMotion = useReducedMotion();
 
   // Show only latest 3 posts on homepage
   const displayedPosts = posts.slice(0, 3);
@@ -32,9 +34,9 @@ export default function Blog({ posts }: BlogProps) {
         {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -53,9 +55,12 @@ export default function Blog({ posts }: BlogProps) {
               {displayedPosts.map((post, index) => (
                 <motion.article
                   key={post.slug}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={getTransition(reduceMotion, {
+                    duration: 0.5,
+                    delay: index * 0.1,
+                  })}
                   className="bg-[#171717] border border-[#262626] rounded-xl overflow-hidden card-hover group"
                 >
                   <Link href={`/blog/${post.slug}`}>
@@ -112,9 +117,9 @@ export default function Blog({ posts }: BlogProps) {
             {/* View All Link */}
             {posts.length > 3 && (
               <motion.div
-                initial={{ opacity: 0 }}
+                initial={reduceMotion ? false : { opacity: 0 }}
                 animate={isInView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.5 }}
+                transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.5 })}
                 className="text-center mt-12"
               >
                 <Link
@@ -130,9 +135,9 @@ export default function Blog({ posts }: BlogProps) {
         ) : (
           /* Empty State */
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.2 })}
             className="text-center py-12"
           >
             <BookOpen className="w-16 h-16 mx-auto text-[#262626] mb-4" />

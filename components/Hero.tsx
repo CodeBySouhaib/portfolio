@@ -1,11 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { getTransition } from "@/lib/motion";
 import { Github, Linkedin, Mail, MapPin, Briefcase, Download } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
 import Terminal from "./Terminal";
 
 export default function Hero() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section
       id="home"
@@ -30,9 +33,9 @@ export default function Hero() {
         <div className="text-center">
           {/* Terminal-style intro */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={getTransition(reduceMotion, { duration: 0.5 })}
             className="inline-block mb-6"
           >
             <div className="bg-[#171717] border border-[#262626] rounded-lg px-4 py-2 font-mono text-sm">
@@ -43,9 +46,9 @@ export default function Hero() {
 
           {/* Name */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.1 })}
             className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4"
           >
             <span className="glitch" data-text="Souhaib">Souhaib</span>{" "}
@@ -54,9 +57,9 @@ export default function Hero() {
 
           {/* Title with typing effect */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.2 })}
             className="flex items-center justify-center gap-2 mb-6"
           >
             <span className="text-xl sm:text-2xl text-[#737373] font-mono">
@@ -67,9 +70,9 @@ export default function Hero() {
 
           {/* Open to work badge */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.3 })}
             className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 text-green-400 px-4 py-2 rounded-full text-sm font-medium mb-8"
           >
             <Briefcase size={16} />
@@ -78,22 +81,21 @@ export default function Hero() {
 
           {/* Description */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.4 })}
             className="max-w-2xl mx-auto text-[#737373] text-lg mb-8 leading-relaxed"
           >
-            Building secure, scalable web and mobile applications using{" "}
-            <span className="text-[#e5e5e5]">ASP.NET Core</span>,{" "}
-            <span className="text-[#e5e5e5]">Vue.js</span>, and modern cloud technologies.
-            Passionate about clean architecture, real-time features, and DevOps practices.
+            Building secure, scalable web and mobile applications using Flutter, Supabase,
+            ASP.NET Core, and Vue.js. Passionate about clean architecture, real-time features,
+            and shipping products that work.
           </motion.p>
 
           {/* Location */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.5 })}
             className="flex items-center justify-center gap-2 text-[#737373] mb-8"
           >
             <MapPin size={18} />
@@ -102,9 +104,9 @@ export default function Hero() {
 
           {/* Social Links */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.6 })}
             className="flex items-center justify-center gap-4 mb-12"
           >
             <a
@@ -133,9 +135,9 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.7 })}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a
@@ -167,15 +169,19 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={reduceMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.5 }}
+        transition={getTransition(reduceMotion, { delay: 1, duration: 0.5 })}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <div className="w-6 h-10 border-2 border-[#262626] rounded-full flex justify-center">
           <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
+            animate={reduceMotion ? { y: 0 } : { y: [0, 12, 0] }}
+            transition={
+              reduceMotion
+                ? { duration: 0 }
+                : { repeat: Infinity, duration: 1.5 }
+            }
             className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full mt-2"
           />
         </div>

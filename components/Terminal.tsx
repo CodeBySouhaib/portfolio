@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { getTransition } from "@/lib/motion";
 
 interface TerminalLine {
   type: "input" | "output";
@@ -95,6 +96,7 @@ export default function Terminal() {
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<NodeJS.Timeout | null>(null);
+  const reduceMotion = useReducedMotion();
 
   const GAME_WIDTH = 30;
   const GAME_HEIGHT = 10;
@@ -509,9 +511,9 @@ export default function Terminal() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.8 }}
+      transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.8 })}
       className="w-full max-w-2xl mx-auto mt-12"
     >
       <div className="bg-[#0d0d0d] border border-[#262626] rounded-lg overflow-hidden shadow-2xl">

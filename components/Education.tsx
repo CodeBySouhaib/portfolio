@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
+import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
 import { GraduationCap, Calendar, MapPin } from "lucide-react";
 
@@ -41,6 +42,7 @@ const languages = [
 export default function Education() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const reduceMotion = useReducedMotion();
 
   return (
     <section id="education" className="py-24">
@@ -48,9 +50,9 @@ export default function Education() {
         {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -67,9 +69,12 @@ export default function Education() {
             {education.map((edu, index) => (
               <motion.div
                 key={edu.degree}
-                initial={{ opacity: 0, x: -20 }}
+                initial={reduceMotion ? false : { opacity: 0, x: -20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                transition={getTransition(reduceMotion, {
+                  duration: 0.5,
+                  delay: index * 0.2,
+                })}
                 className="bg-[#171717] border border-[#262626] rounded-xl p-6 card-hover"
               >
                 <div className="flex items-start gap-4">
@@ -107,9 +112,9 @@ export default function Education() {
           <div className="space-y-6">
             {/* Languages */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={reduceMotion ? false : { opacity: 0, x: 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.4 })}
               className="bg-[#171717] border border-[#262626] rounded-xl p-6"
             >
               <h3 className="text-lg font-bold text-[#e5e5e5] mb-4 font-mono">
@@ -135,9 +140,9 @@ export default function Education() {
 
             {/* Interests */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={reduceMotion ? false : { opacity: 0, x: 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.5 })}
               className="bg-[#171717] border border-[#262626] rounded-xl p-6"
             >
               <h3 className="text-lg font-bold text-[#e5e5e5] mb-4 font-mono">
@@ -163,9 +168,9 @@ export default function Education() {
 
             {/* 2026 Goals */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={reduceMotion ? false : { opacity: 0, x: 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.6 })}
               className="bg-[#171717] border border-[#262626] rounded-xl p-6"
             >
               <h3 className="text-lg font-bold text-[#e5e5e5] mb-4 font-mono">

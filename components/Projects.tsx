@@ -1,10 +1,35 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { getTransition } from "@/lib/motion";
 import Image from "next/image";
-import { Github, ExternalLink, Star } from "lucide-react";
+import { Github, ExternalLink, Star, Brain } from "lucide-react";
+
+function CrowdAnswerLogoMark() {
+  return (
+    <div
+      className="relative w-16 h-16 flex-shrink-0 flex items-center justify-center"
+      role="img"
+      aria-label="CrowdAnswer logo"
+    >
+      <div
+        className="absolute inset-0 rounded-full opacity-90"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 40%, rgba(0, 199, 255, 0.18), rgba(0, 199, 255, 0.04) 45%, transparent 70%)",
+        }}
+      />
+      <div
+        className="relative flex h-[52px] w-[52px] items-center justify-center rounded-full border border-[#00C7FF]/35 bg-white/[0.06] shadow-[0_0_20px_rgba(0,199,255,0.12)]"
+        aria-hidden
+      >
+        <Brain className="h-9 w-9 text-white" strokeWidth={1.35} />
+      </div>
+    </div>
+  );
+}
 
 const projects = [
   {
@@ -30,10 +55,11 @@ const projects = [
       "Vercel",
     ],
     github: "https://github.com/CodeBySouhaib/crowdanswer",
-    logo: "/crowdanswer.svg",
+    logoType: "crowdanswer",
     featured: true,
     featuredBadge: "Latest",
     liveUrl: "https://crowdanswer.vercel.app",
+    caseStudyUrl: "/blog/crowdanswer-flutter-supabase",
     repoPrivate: false,
   },
   {
@@ -68,13 +94,14 @@ const projects = [
     description:
       "Cross-platform chat app with instant messaging and presence detection using React Native and ASP.NET Core SignalR.",
     technologies: ["React Native", "ASP.NET Core", "SignalR", "Real-time"],
-    github: "https://github.com/CodeBySouhaib",
+    github: "https://github.com/CodeBySouhaib/realtime-chat",
   },
   {
     title: "Flutter PDF Manager",
     description:
       "Mobile application for scanning documents, converting to PDF, and managing files with cloud synchronization.",
     technologies: ["Flutter", "Dart", "Document Management", "Cross-Platform"],
+    // TODO: replace with public repo URL when available
     github: "https://github.com/CodeBySouhaib",
   },
   {
@@ -82,6 +109,7 @@ const projects = [
     description:
       "Full-featured task management application with JWT authentication, real-time updates, and persistent storage.",
     technologies: ["Vue.js 3", "JWT Auth", "Pinia", "Task Management"],
+    // TODO: replace with public repo URL when available
     github: "https://github.com/CodeBySouhaib",
   },
 ];
@@ -89,6 +117,7 @@ const projects = [
 export default function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const reduceMotion = useReducedMotion();
 
   const featuredProjects = projects.filter((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
@@ -99,9 +128,9 @@ export default function Projects() {
         {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -117,9 +146,12 @@ export default function Projects() {
           {featuredProjects.map((featuredProject, fi) => (
             <motion.div
               key={featuredProject.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + fi * 0.12 }}
+              transition={getTransition(reduceMotion, {
+                duration: 0.5,
+                delay: 0.2 + fi * 0.12,
+              })}
             >
               <div className="bg-[#171717] border border-[#262626] rounded-xl overflow-hidden card-hover ring-1 ring-white/[0.06] shadow-[0_0_40px_-12px_rgba(59,130,246,0.35)]">
                 <div className="p-6 sm:p-8">
@@ -137,22 +169,27 @@ export default function Projects() {
                   </div>
 
                   <div className="flex items-center gap-4 mb-4">
-                    {featuredProject.logo && (
-                      <div
-                        className={`relative w-16 h-16 flex-shrink-0 rounded-xl p-2 ${
-                          featuredProject.logo.endsWith(".svg")
-                            ? "bg-[#0B0D1A] border border-[#00C7FF]/35"
-                            : "bg-white"
-                        }`}
-                      >
-                        <Image
-                          src={featuredProject.logo}
-                          alt={`${featuredProject.title} logo`}
-                          fill
-                          className="object-contain p-1"
-                          unoptimized={featuredProject.logo.endsWith(".svg")}
-                        />
-                      </div>
+                    {"logoType" in featuredProject &&
+                    featuredProject.logoType === "crowdanswer" ? (
+                      <CrowdAnswerLogoMark />
+                    ) : (
+                      featuredProject.logo && (
+                        <div
+                          className={`relative w-16 h-16 flex-shrink-0 rounded-xl p-2 ${
+                            featuredProject.logo.endsWith(".svg")
+                              ? "bg-[#0B0D1A] border border-[#00C7FF]/35"
+                              : "bg-white"
+                          }`}
+                        >
+                          <Image
+                            src={featuredProject.logo}
+                            alt={`${featuredProject.title} logo`}
+                            fill
+                            className="object-contain p-1"
+                            unoptimized={featuredProject.logo.endsWith(".svg")}
+                          />
+                        </div>
+                      )
                     )}
                     <div>
                       <h3 className="text-2xl font-bold text-[#e5e5e5]">
@@ -247,9 +284,12 @@ export default function Projects() {
           {otherProjects.map((project, index) => (
             <motion.div
               key={project.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+              transition={getTransition(reduceMotion, {
+                duration: 0.5,
+                delay: 0.3 + index * 0.1,
+              })}
               className="bg-[#171717] border border-[#262626] rounded-xl p-6 card-hover group"
             >
               <div className="flex items-start justify-between mb-3 gap-2">
@@ -310,9 +350,9 @@ export default function Projects() {
 
         {/* View All Link */}
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={reduceMotion ? false : { opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.8 }}
+          transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.8 })}
           className="text-center mt-12"
         >
           <a

@@ -13,7 +13,7 @@ export default function Home() {
   const posts = getAllPosts();
 
   return (
-    <main>
+    <main id="main">
       <Hero />
       <About />
       <Skills />

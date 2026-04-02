@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
+import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
 
 const skillCategories = [
@@ -58,6 +59,7 @@ const skillCategories = [
 export default function Skills() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const reduceMotion = useReducedMotion();
 
   return (
     <section id="skills" className="py-24 bg-[#0d0d0d]">
@@ -65,9 +67,9 @@ export default function Skills() {
         {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -83,9 +85,12 @@ export default function Skills() {
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
+              transition={getTransition(reduceMotion, {
+                duration: 0.5,
+                delay: categoryIndex * 0.1,
+              })}
               className="bg-[#171717] border border-[#262626] rounded-xl p-6 card-hover"
             >
               <h3 className="text-lg font-semibold mb-4 text-[#3B82F6] font-mono">
@@ -107,9 +112,9 @@ export default function Skills() {
 
         {/* Highlighted Skills */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.6 })}
           className="mt-12 text-center"
         >
           <p className="text-[#737373] mb-4">Primary Focus</p>

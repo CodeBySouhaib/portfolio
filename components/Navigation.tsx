@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { getTransition } from "@/lib/motion";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
@@ -19,6 +20,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,8 +47,9 @@ export default function Navigation() {
   return (
     <>
       <motion.nav
-        initial={{ y: -100 }}
+        initial={reduceMotion ? false : { y: -100 }}
         animate={{ y: 0 }}
+        transition={getTransition(reduceMotion, { duration: 0.35 })}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-[#0a0a0a]/90 backdrop-blur-md border-b border-[#262626]"
@@ -94,9 +97,10 @@ export default function Navigation() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            exit={{ opacity: 0, y: reduceMotion ? 0 : -20 }}
+            transition={getTransition(reduceMotion, { duration: 0.2 })}
             className="fixed inset-0 z-40 md:hidden pt-16 bg-[#0a0a0a]/95 backdrop-blur-md"
           >
             <div className="flex flex-col items-center gap-2 p-4">
@@ -104,9 +108,9 @@ export default function Navigation() {
                 <motion.a
                   key={item.href}
                   href={item.href}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  transition={getTransition(reduceMotion, { delay: index * 0.05 })}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`w-full text-center px-4 py-3 text-lg font-medium rounded-lg transition-colors ${
                     activeSection === item.href.slice(1)

@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
+import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
 import { Send, Mail, Github, Linkedin, MapPin, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const reduceMotion = useReducedMotion();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -59,9 +61,9 @@ export default function Contact() {
         {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -78,9 +80,9 @@ export default function Contact() {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={reduceMotion ? false : { opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.2 })}
           >
             <div className="bg-[#171717] border border-[#262626] rounded-xl p-6 sm:p-8 h-full">
               <h3 className="text-xl font-bold text-[#e5e5e5] mb-6">
@@ -156,9 +158,9 @@ export default function Contact() {
 
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.4 })}
           >
             <form
               onSubmit={handleSubmit}
@@ -278,6 +280,15 @@ export default function Contact() {
                     </>
                   )}
                 </button>
+                <p className="text-center text-sm text-[#525252] mt-4">
+                  Or email me directly at{" "}
+                  <a
+                    href="mailto:harrabisouhaib@gmail.com"
+                    className="text-[#737373] hover:text-[#3B82F6] transition-colors underline underline-offset-2"
+                  >
+                    harrabisouhaib@gmail.com
+                  </a>
+                </p>
               </div>
             </form>
           </motion.div>

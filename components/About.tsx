@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
+import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
 import { Code2, GitPullRequest, Calendar, Languages } from "lucide-react";
 
@@ -15,6 +16,7 @@ const stats = [
 export default function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const reduceMotion = useReducedMotion();
 
   return (
     <section id="about" className="py-24 relative">
@@ -22,9 +24,9 @@ export default function About() {
         {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -38,9 +40,9 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={reduceMotion ? false : { opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.2 })}
           >
             <div className="bg-[#171717] border border-[#262626] rounded-xl p-6 sm:p-8">
               {/* Terminal header */}
@@ -85,17 +87,20 @@ export default function About() {
 
           {/* Stats Grid */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.4 })}
             className="grid grid-cols-2 gap-4"
           >
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                transition={getTransition(reduceMotion, {
+                  duration: 0.5,
+                  delay: 0.5 + index * 0.1,
+                })}
                 className="bg-[#171717] border border-[#262626] rounded-xl p-6 text-center card-hover"
               >
                 <stat.icon className="w-8 h-8 mx-auto mb-3 text-[#3B82F6]" />
