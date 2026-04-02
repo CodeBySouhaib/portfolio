@@ -99,7 +99,7 @@ export default function Hero() {
             className="flex items-center justify-center gap-2 text-[#737373] mb-8"
           >
             <MapPin size={18} />
-            <span>Sidi Bouzid, Tunisia</span>
+            <span>Dubai, UAE</span>
           </motion.div>
 
           {/* Social Links */}

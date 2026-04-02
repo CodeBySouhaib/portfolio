@@ -5,7 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { getTransition } from "@/lib/motion";
 import Image from "next/image";
-import { Github, ExternalLink, Star, Brain } from "lucide-react";
+import { Github, ExternalLink, Star, Brain, Image as ImageIcon } from "lucide-react";
 
 function CrowdAnswerLogoMark() {
   return (
@@ -54,13 +54,13 @@ const projects = [
       "Resend",
       "Vercel",
     ],
-    github: "https://github.com/CodeBySouhaib/crowdanswer",
+    github: "https://github.com/CodeBySouhaib",
     logoType: "crowdanswer",
     featured: true,
     featuredBadge: "Latest",
     liveUrl: "https://crowdanswer.vercel.app",
     caseStudyUrl: "/blog/crowdanswer-flutter-supabase",
-    repoPrivate: false,
+    repoPrivate: true,
   },
   {
     title: "Soukify",
@@ -87,6 +87,7 @@ const projects = [
     logo: "/soukify.png",
     featured: true,
     caseStudyUrl: "/blog/building-ecommerce-platform",
+    galleryUrl: "/gallery",
     repoPrivate: true,
   },
   {
@@ -272,6 +273,15 @@ export default function Projects() {
                           Read Case Study
                         </a>
                       )}
+                    {featuredProject.galleryUrl && (
+                      <a
+                        href={featuredProject.galleryUrl}
+                        className="flex items-center gap-2 px-4 py-2 bg-[#171717] border border-[#262626] text-[#737373] rounded-lg text-sm hover:text-[#e5e5e5] hover:border-[#3B82F6]/50 transition-colors font-medium"
+                      >
+                        <ImageIcon size={16} />
+                        View Screenshots
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

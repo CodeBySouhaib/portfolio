@@ -4,11 +4,13 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
-import { Code2, GitPullRequest, Calendar, Languages } from "lucide-react";
+import { Code2, GitPullRequest, Calendar, Languages, Zap, Rocket } from "lucide-react";
 
 const stats = [
-  { icon: Code2, value: "858", label: "GitHub Contributions" },
+  { icon: Code2, value: "1140", label: "GitHub Contributions" },
   { icon: GitPullRequest, value: "3x", label: "Pull Shark" },
+  { icon: Zap, value: "3x", label: "Quickdraw" },
+  { icon: Rocket, value: "3x", label: "YOLO" },
   { icon: Calendar, value: "5", label: "Years Experience" },
   { icon: Languages, value: "3", label: "Languages" },
 ];
@@ -109,6 +111,9 @@ export default function About() {
               </motion.div>
             ))}
           </motion.div>
+          <p className="text-center text-xs text-[#525252] mt-6 md:col-span-2">
+            Last edit: April 2, 2026 · Today: April 2, 2026
+          </p>
         </div>
       </div>
     </section>

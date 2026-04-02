@@ -32,7 +32,7 @@ const COMMANDS: Record<string, string[]> = {
   ],
   about: [
     "Hey! I'm Souhaib Harrabi",
-    "A Full Stack Developer from Tunisia",
+    "A Full Stack Developer based in Dubai, UAE",
     "I build scalable web & mobile apps",
     "Currently open to new opportunities!",
   ],

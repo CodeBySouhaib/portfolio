@@ -149,7 +149,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-sm text-[#737373]">Location</p>
-                    <p className="text-[#e5e5e5]">Sidi Bouzid, Tunisia</p>
+                    <p className="text-[#e5e5e5]">Dubai, UAE</p>
                   </div>
                 </div>
               </div>

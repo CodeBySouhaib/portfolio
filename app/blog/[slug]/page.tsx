@@ -106,6 +106,10 @@ export default async function BlogPost({ params }: Props) {
             dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
           />
         </div>
+
+        <p className="mt-10 pt-8 border-t border-[#262626] text-xs text-[#525252] text-center">
+          Last edit: April 2, 2026 · Today: April 2, 2026
+        </p>
       </article>
     </main>
   );
@@ -122,12 +126,16 @@ function formatContent(content: string): string {
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
     // Italic
     .replace(/\*(.*?)\*/g, "<em>$1</em>")
-    // Code blocks
-    .replace(/```(\w+)?\n([\s\S]*?)```/g, "<pre><code>$2</code></pre>")
+    // Code blocks (support CRLF from Windows)
+    .replace(/```(\w+)?\r?\n([\s\S]*?)```/g, "<pre><code>$2</code></pre>")
     // Inline code
     .replace(/`([^`]+)`/g, "<code>$1</code>")
+    // Images - match ![alt](url) format
+    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="rounded-lg mb-4" loading="lazy" />')
     // Links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    // Gallery images with title (![title](path))
+    .replace(/!\[([^\]]+)\]\(([^)]+)\)<!--gallery-->/g, '<div class="gallery-item"><img src="$2" alt="$1" /><p class="text-sm text-gray-500 mt-1">$1</p></div>')
     // Unordered lists
     .replace(/^\- (.*$)/gm, "<li>$1</li>")
     // Ordered lists

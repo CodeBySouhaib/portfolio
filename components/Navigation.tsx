@@ -1,22 +1,25 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { getTransition } from "@/lib/motion";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#education", label: "Education" },
-  { href: "#blog", label: "Blog" },
-  { href: "#contact", label: "Contact" },
+  { href: "#home", label: "Home", isHash: true },
+  { href: "#about", label: "About", isHash: true },
+  { href: "#skills", label: "Skills", isHash: true },
+  { href: "#experience", label: "Experience", isHash: true },
+  { href: "#projects", label: "Projects", isHash: true },
+  { href: "#education", label: "Education", isHash: true },
+  { href: "/blog", label: "Blog", isHash: false },
+  { href: "#contact", label: "Contact", isHash: true },
 ];
 
 export default function Navigation() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -59,7 +62,7 @@ export default function Navigation() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <a href="#home" className="font-mono text-xl font-bold">
+            <a href="/" className="font-mono text-xl font-bold">
               <span className="text-[#3B82F6]">&lt;</span>
               Souhaib
               <span className="text-[#3B82F6]">/&gt;</span>
@@ -70,7 +73,7 @@ export default function Navigation() {
               {navItems.map((item) => (
                 <a
                   key={item.href}
-                  href={item.href}
+                  href={isHome || !item.isHash ? item.href : `/${item.href}`}
                   className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                     activeSection === item.href.slice(1)
                       ? "text-[#3B82F6] bg-[#3B82F6]/10"
@@ -107,7 +110,7 @@ export default function Navigation() {
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.href}
-                  href={item.href}
+                  href={isHome || !item.isHash ? item.href : `/${item.href}`}
                   initial={reduceMotion ? false : { opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={getTransition(reduceMotion, { delay: index * 0.05 })}
