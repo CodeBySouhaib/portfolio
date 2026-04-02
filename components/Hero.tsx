@@ -147,8 +147,8 @@ export default function Hero() {
               View My Work
             </a>
             <a
-              href="/Souhaib_Harrabi_CVV2.pdf"
-              download="Souhaib_Harrabi_CVV2.pdf"
+              href="/Souhaib_Harrabi_CVUAE.pdf"
+              download="Souhaib_Harrabi_CVUAE.pdf"
               className="px-8 py-3 bg-[#171717] border border-[#262626] font-medium rounded-lg hover:border-[#3B82F6] transition-colors flex items-center gap-2"
             >
               <Download size={18} />
