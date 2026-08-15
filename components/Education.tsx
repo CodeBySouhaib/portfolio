@@ -8,7 +8,7 @@ import { GraduationCap, Calendar } from "lucide-react";
 
 const education = [
   {
-    degree: "Master's Degree in Computer Science",
+    degree: "Master's Degree — IAM Ingénierie des Applications Mobiles",
     institution: "Higher Institute of Technological Studies of Sidi Bouzid",
     period: "September 2025 – June 2027",
     status: "In Progress",
@@ -16,7 +16,7 @@ const education = [
       "2-year program. Completed first year with moyenne 16 — top 1 of the class. Focus: software engineering, cloud technologies, and distributed systems.",
   },
   {
-    degree: "Bachelor's Degree in Computer Science",
+    degree: "Bachelor's Degree — DSI Développement des Systèmes d'Information",
     institution: "Higher Institute of Technological Studies of Djerba",
     period: "September 2022 – September 2025",
     status: "Completed",
