@@ -7,7 +7,7 @@ import { useRef } from "react";
 import { Code2, GitPullRequest, Calendar, Languages, Zap, Rocket } from "lucide-react";
 
 const stats = [
-  { icon: Code2, value: "1140", label: "GitHub Contributions" },
+  { icon: Code2, value: "1183", label: "GitHub Contributions" },
   { icon: GitPullRequest, value: "3x", label: "Pull Shark" },
   { icon: Zap, value: "3x", label: "Quickdraw" },
   { icon: Rocket, value: "3x", label: "YOLO" },
@@ -31,60 +31,47 @@ export default function About() {
           transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            <span className="text-[#3B82F6] font-mono">&lt;</span>
+          <p className="editorial-label mb-3">About</p>
+          <h2 className="editorial-heading text-3xl sm:text-4xl text-foreground mb-5">
             About Me
-            <span className="text-[#3B82F6] font-mono">/&gt;</span>
           </h2>
-          <div className="w-20 h-1 bg-[#3B82F6] mx-auto rounded-full" />
+          <div className="editorial-divider mx-auto" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Text Content */}
+        {/* Two-column layout: bio on the left, stats on the right */}
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          {/* Bio Text */}
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.2 })}
+            className="border border-border rounded-xl p-6 sm:p-8 box-hover"
+            style={{ background: 'var(--card-gradient)' }}
           >
-            <div className="bg-[#171717] border border-[#262626] rounded-xl p-6 sm:p-8">
-              {/* Terminal header */}
-              <div className="flex items-center gap-2 mb-4 pb-4 border-b border-[#262626]">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
-                <span className="ml-2 text-[#737373] text-sm font-mono">about.md</span>
-              </div>
-
-              <div className="space-y-4 text-[#737373] leading-relaxed">
-                <p>
-                  <span className="text-[#3B82F6] font-mono">## </span>
-                  <span className="text-[#e5e5e5]">Hey there!</span>
-                </p>
-                <p>
-                  I&apos;m a <span className="text-[#e5e5e5]">full-stack developer</span> passionate 
-                  about building secure, scalable web and mobile applications. Recent{" "}
-                  <span className="text-[#e5e5e5]">Bachelor&apos;s graduate in Computer Science</span> from 
-                  ISET Djerba (2025), currently pursuing my Master&apos;s degree.
-                </p>
-                <p>
-                  I work primarily with <span className="text-[#3B82F6]">ASP.NET Core</span>,{" "}
-                  <span className="text-[#3B82F6]">Vue.js 3</span>,{" "}
-                  <span className="text-[#3B82F6]">Flutter</span>, and{" "}
-                  <span className="text-[#3B82F6]">PostgreSQL</span>. My capstone project was a 
-                  production-ready e-commerce platform featuring JWT/RBAC authentication, 
-                  real-time SignalR chat, and Docker deployment.
-                </p>
-                <p>
-                  When I&apos;m not coding, you&apos;ll find me kicking pads at{" "}
-                  <span className="text-[#e5e5e5]">Muay Thai</span> training — been at it for 
-                  almost a year now. Some people do yoga, I prefer something with a bit more... impact.
-                </p>
-                <p className="font-mono text-sm">
-                  <span className="text-[#737373]">// </span>
-                  <span className="text-green-400">Coffee enthusiast & 3am debugger</span>
-                </p>
-              </div>
-            </div>
+            <p className="text-lg sm:text-xl text-foreground leading-relaxed">
+              Hey there! I&apos;m a full-stack developer passionate about building
+              secure, scalable web and mobile applications. Recent Bachelor&apos;s
+              graduate in Computer Science from ISET Djerba (2025), currently
+              pursuing my Master&apos;s degree.
+            </p>
+            <p className="text-lg sm:text-xl text-foreground leading-relaxed">
+              I work primarily with{" "}
+              <span className="text-accent">ASP.NET Core</span>,{" "}
+              <span className="text-accent">Vue.js 3</span>,{" "}
+              <span className="text-accent">Flutter</span>, and{" "}
+              <span className="text-accent">PostgreSQL</span>. My capstone
+              project was a production-ready e-commerce platform featuring JWT/RBAC
+              authentication, real-time SignalR chat, and Docker deployment.
+            </p>
+            <p className="text-lg sm:text-xl text-foreground leading-relaxed">
+              When I&apos;m not coding, you&apos;ll find me kicking pads at{" "}
+              <span className="text-foreground">Muay Thai</span> training — been at
+              it for almost a year now. Some people do yoga, I prefer something
+              with a bit more... impact.
+            </p>
+            <p className="text-sm italic text-muted">
+              Coffee enthusiast & 3am debugger
+            </p>
           </motion.div>
 
           {/* Stats Grid */}
@@ -103,17 +90,17 @@ export default function About() {
                   duration: 0.5,
                   delay: 0.5 + index * 0.1,
                 })}
-                className="bg-[#171717] border border-[#262626] rounded-xl p-6 text-center card-hover"
+                className="border border-border rounded-xl p-6 text-center box-hover"
+                style={{ background: 'var(--card-gradient)' }}
               >
-                <stat.icon className="w-8 h-8 mx-auto mb-3 text-[#3B82F6]" />
-                <div className="text-3xl font-bold text-[#e5e5e5] mb-1">{stat.value}</div>
-                <div className="text-sm text-[#737373]">{stat.label}</div>
+                <stat.icon className="w-8 h-8 mx-auto mb-3 text-accent" />
+                <div className="text-3xl font-bold text-foreground mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
-          <p className="text-center text-xs text-[#525252] mt-6 md:col-span-2">
-            Last edit: April 2, 2026 · Today: April 2, 2026
-          </p>
         </div>
       </div>
     </section>

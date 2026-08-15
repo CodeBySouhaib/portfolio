@@ -1,12 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #e5e5e5;
-  --surface: #171717;
+  --background: #0f0f14;
+  --foreground: #e2e8f0;
+  --surface: #181825;
   --accent: #3B82F6;
-  --muted: #737373;
-  --border: #262626;
+  --accent-hover: #2563eb;
+  --muted: #94a3b8;
+  --border: #334155;
+  --subtle: #64748b;
+  --subtle-text: #94a3b8;
+  --subtle-border: #1e293b;
+  --faint: #475569;
+  --dim: #1e293b;
+  --content-text: #cbd5e1;
+  --white: #ffffff;
+  --success: #22c55e;
+  --error: #ef4444;
+  --terminal-green: #27ca3f;
+  --terminal-red: #ff5f56;
+  --terminal-yellow: #ffbd2e;
+  --project-dark: #0B0D1A;
+  --project-accent: #00C7FF;
+  --accent-glow-soft: rgba(59, 130, 246, 0.15);
+  --accent-glow-medium: rgba(59, 130, 246, 0.2);
+  --accent-glow-strong: rgba(59, 130, 246, 0.3);
+  --accent-glow-stronger: rgba(59, 130, 246, 0.4);
+  --project-accent-rgb: 0, 199, 255;
+  --surface-gradient: linear-gradient(135deg, #181825 0%, #1e293b 100%);
+  --card-gradient: linear-gradient(145deg, #1e293b 0%, #181825 100%);
 }
 
 @theme inline {
@@ -16,6 +38,24 @@
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-border: var(--border);
+  --color-subtle: var(--subtle);
+  --color-subtle-text: var(--subtle-text);
+  --color-subtle-border: var(--subtle-border);
+  --color-faint: var(--faint);
+  --color-dim: var(--dim);
+  --color-content: var(--content-text);
+  --color-white: var(--white);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-terminal-green: var(--terminal-green);
+  --color-terminal-red: var(--terminal-red);
+  --color-terminal-yellow: var(--terminal-yellow);
+  --color-project-dark: var(--project-dark);
+  --color-project-accent: var(--project-accent);
+  --color-accent-glow-soft: var(--accent-glow-soft);
+  --color-accent-glow-medium: var(--accent-glow-medium);
+  --color-accent-glow-strong: var(--accent-glow-strong);
+  --color-accent-glow-stronger: var(--accent-glow-stronger);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -24,10 +64,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -36,7 +78,6 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--border);
-  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -55,7 +96,7 @@ html {
 code {
   font-family: var(--font-mono), monospace;
   background: var(--surface);
-  padding: 0.2em 0.4em;
+  padding: 0.15em 0.4em;
   border-radius: 4px;
   font-size: 0.9em;
 }
@@ -69,136 +110,49 @@ code {
   animation: blink 1s infinite;
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, var(--accent), #60a5fa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Static background gradient — no animation */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(15, 15, 20, 0) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: -1;
 }
 
-.glow {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+/* Box hover utility */
+.box-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.box-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.12);
+  border-color: var(--accent);
 }
 
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 40px rgba(59, 130, 246, 0.1);
+/* Editorial utilities */
+.editorial-heading {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
-/* Glitch Effect */
-.glitch {
-  position: relative;
+.editorial-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
 }
 
-.glitch:hover {
-  animation: glitch-skew 0.5s infinite linear alternate-reverse;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.glitch:hover::before {
-  opacity: 0.8;
-  color: #0ff;
-  animation: glitch-effect 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-  transform: translate(-2px, -2px);
-}
-
-.glitch:hover::after {
-  opacity: 0.8;
-  color: #f0f;
-  animation: glitch-effect 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse infinite;
-  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-  transform: translate(2px, 2px);
-}
-
-@keyframes glitch-effect {
-  0% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(-3px, 3px);
-  }
-  40% {
-    transform: translate(-3px, -3px);
-  }
-  60% {
-    transform: translate(3px, 3px);
-  }
-  80% {
-    transform: translate(3px, -3px);
-  }
-  100% {
-    transform: translate(0);
-  }
-}
-
-@keyframes glitch-skew {
-  0% {
-    transform: skew(0deg);
-  }
-  10% {
-    transform: skew(-1deg);
-  }
-  20% {
-    transform: skew(1deg);
-  }
-  30% {
-    transform: skew(0deg);
-  }
-  40% {
-    transform: skew(1deg);
-  }
-  50% {
-    transform: skew(-1deg);
-  }
-  60% {
-    transform: skew(0deg);
-  }
-  70% {
-    transform: skew(-1deg);
-  }
-  80% {
-    transform: skew(1deg);
-  }
-  90% {
-    transform: skew(0deg);
-  }
-  100% {
-    transform: skew(-1deg);
-  }
-}
-
-/* Shake animation for earthquake effect */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px) rotate(-1deg); }
-  20%, 40%, 60%, 80% { transform: translateX(10px) rotate(1deg); }
-}
-
-/* Confetti falling animation */
-@keyframes confetti-fall {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotate(720deg);
-    opacity: 0;
-  }
+.editorial-divider {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
 }
 
 /* Gallery styles */
@@ -214,12 +168,12 @@ code {
   height: auto;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .gallery-grid img:hover {
   transform: scale(1.02);
-  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
+  opacity: 0.9;
 }
 
 .gallery-caption {

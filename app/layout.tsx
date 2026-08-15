@@ -6,6 +6,7 @@ import MotionProvider from "@/components/MotionProvider";
 import DevOgWarning from "@/components/DevOgWarning";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import BackToTop from "@/components/BackToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +20,7 @@ const geistMono = Geist_Mono({
 
 const title = "Souhaib Harrabi | Full Stack & Mobile Developer";
 const description =
-  "Full Stack Developer specializing in Flutter, Supabase, ASP.NET Core, and Vue.js. Building CrowdAnswer — a social Q&A mobile app. Open to roles in Dubai & remote.";
+  "Full Stack Developer specializing in Flutter, Supabase, ASP.NET Core, and Vue.js. Building CrowdAnswer — a social Q&A mobile app. Open to roles in Tunis & remote.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://harrabiportfolio.vercel.app"),
@@ -31,14 +32,13 @@ export const metadata: Metadata = {
     "Vue.js",
     "React",
     "TypeScript",
-    "UAE",
-    "Dubai",
+    "Tunis",
+    "Tunisia",
     "Flutter",
     "Supabase",
     "CrowdAnswer",
     "GetX",
     "PostgreSQL",
-    "Dubai",
     "mobile developer",
   ],
   authors: [{ name: "Souhaib Harrabi" }],
@@ -72,16 +72,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0a0a0a] text-[#e5e5e5]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-cyan-500 focus:text-black focus:rounded"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded"
         >
           Skip to main content
         </a>
         <MotionProvider>
           <Navigation />
+          <BackToTop />
           {children}
         </MotionProvider>
         <DevOgWarning />

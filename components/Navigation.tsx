@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { getTransition } from "@/lib/motion";
 import { Menu, X } from "lucide-react";
@@ -29,7 +30,6 @@ export default function Navigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // Update active section based on scroll position
       const sections = navItems.map((item) => item.href.slice(1));
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
@@ -55,18 +55,18 @@ export default function Navigation() {
         transition={getTransition(reduceMotion, { duration: 0.35 })}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-[#0a0a0a]/90 backdrop-blur-md border-b border-[#262626]"
+            ? "bg-background/80 backdrop-blur-md border-b border-subtle-border"
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <a href="/" className="font-mono text-xl font-bold">
-              <span className="text-[#3B82F6]">&lt;</span>
+            <Link href="/" className="font-mono text-lg font-bold tracking-tight">
+              <span className="text-accent">&lt;</span>
               Souhaib
-              <span className="text-[#3B82F6]">/&gt;</span>
-            </a>
+              <span className="text-accent">/&gt;</span>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1">
@@ -76,8 +76,8 @@ export default function Navigation() {
                   href={isHome || !item.isHash ? item.href : `/${item.href}`}
                   className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                     activeSection === item.href.slice(1)
-                      ? "text-[#3B82F6] bg-[#3B82F6]/10"
-                      : "text-[#737373] hover:text-[#e5e5e5] hover:bg-[#171717]"
+                      ? "text-foreground"
+                      : "text-muted hover:text-foreground"
                   }`}
                 >
                   {item.label}
@@ -88,7 +88,7 @@ export default function Navigation() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-[#171717] transition-colors"
+              className="md:hidden p-2 rounded-lg hover:bg-background transition-colors"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -104,9 +104,9 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: reduceMotion ? 0 : -20 }}
             transition={getTransition(reduceMotion, { duration: 0.2 })}
-            className="fixed inset-0 z-40 md:hidden pt-16 bg-[#0a0a0a]/95 backdrop-blur-md"
+            className="fixed inset-0 z-40 md:hidden pt-16 bg-background/95 backdrop-blur-md"
           >
-            <div className="flex flex-col items-center gap-2 p-4">
+            <div className="flex flex-col items-center gap-1 p-4">
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.href}
@@ -117,8 +117,8 @@ export default function Navigation() {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`w-full text-center px-4 py-3 text-lg font-medium rounded-lg transition-colors ${
                     activeSection === item.href.slice(1)
-                      ? "text-[#3B82F6] bg-[#3B82F6]/10"
-                      : "text-[#737373] hover:text-[#e5e5e5] hover:bg-[#171717]"
+                      ? "text-foreground"
+                      : "text-muted hover:text-foreground hover:bg-background"
                   }`}
                 >
                   {item.label}

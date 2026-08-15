@@ -4,6 +4,7 @@ const base = "https://harrabiportfolio.vercel.app";
 
 const paths = [
   "/",
+  "/gallery",
   "/blog/building-ecommerce-platform",
   "/blog/react-vs-vue",
   "/blog/why-i-left-php",

@@ -62,26 +62,25 @@ export default function Skills() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="skills" className="py-24 bg-[#0d0d0d]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="skills" className="py-32 bg-background relative overflow-hidden">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
           ref={ref}
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={getTransition(reduceMotion, { duration: 0.5 })}
-          className="text-center mb-16"
+          className="mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            <span className="text-[#3B82F6] font-mono">&lt;</span>
+          <p className="editorial-label mb-3">Expertise</p>
+          <h2 className="editorial-heading text-4xl sm:text-5xl text-foreground">
             Skills
-            <span className="text-[#3B82F6] font-mono">/&gt;</span>
           </h2>
-          <div className="w-20 h-1 bg-[#3B82F6] mx-auto rounded-full" />
+          <div className="editorial-divider mt-6" />
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
@@ -89,18 +88,17 @@ export default function Skills() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={getTransition(reduceMotion, {
                 duration: 0.5,
-                delay: categoryIndex * 0.1,
+                delay: categoryIndex * 0.08,
               })}
-              className="bg-[#171717] border border-[#262626] rounded-xl p-6 card-hover"
+              className="border border-border rounded-xl p-5 box-hover"
+              style={{ background: 'var(--card-gradient)' }}
             >
-              <h3 className="text-lg font-semibold mb-4 text-[#3B82F6] font-mono">
-                {`// ${category.title}`}
-              </h3>
+              <p className="editorial-label mb-4">{category.title}</p>
               <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1.5 bg-[#0a0a0a] border border-[#262626] rounded-lg text-sm text-[#e5e5e5] hover:border-[#3B82F6] hover:text-[#3B82F6] transition-colors cursor-default"
+                    className="px-3 py-1.5 bg-surface border border-border rounded text-sm text-muted"
                   >
                     {skill}
                   </span>
@@ -110,19 +108,19 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Highlighted Skills */}
+        {/* Primary Focus */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.6 })}
-          className="mt-12 text-center"
+          transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.5 })}
+          className="mt-20"
         >
-          <p className="text-[#737373] mb-4">Primary Focus</p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <p className="editorial-label mb-4 text-center">Primary Focus</p>
+          <div className="flex flex-wrap justify-center gap-3">
             {["ASP.NET Core", "Vue.js 3", "PostgreSQL", "Docker"].map((skill) => (
               <span
                 key={skill}
-                className="px-6 py-3 bg-[#3B82F6]/10 border border-[#3B82F6]/30 text-[#3B82F6] rounded-lg font-medium"
+                className="px-4 py-2 border border-border rounded text-sm text-muted"
               >
                 {skill}
               </span>

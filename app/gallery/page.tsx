@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, X } from "lucide-react";
 
 const screenshots = {
   client: [
@@ -64,56 +64,52 @@ export default function GalleryPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-[#737373] hover:text-[#3B82F6] transition-colors mb-6"
+          className="inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors mb-12 text-sm tracking-wide uppercase"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size={14} strokeWidth={1.5} />
           Back to home
         </Link>
 
-        <h1 className="text-4xl font-bold mb-4">
-          <span className="text-[#3B82F6] font-mono">&lt;</span>
-          Screenshots
-          <span className="text-[#3B82F6] font-mono">/&gt;</span>
-        </h1>
-        <p className="text-[#737373] mb-8">Soukify - Multi-Vendor E-Commerce Platform</p>
+        <div className="mb-12">
+          <p className="text-xs font-medium tracking-[0.2em] uppercase text-muted mb-3">
+            Gallery
+          </p>
+          <h1 className="text-5xl sm:text-6xl font-light tracking-tight text-foreground">
+            Screenshots
+          </h1>
+        </div>
 
-        <div className="flex gap-4 mb-8 border-b border-[#262626]">
+        <div className="flex gap-6 mb-10">
           {(["client", "vendor", "admin"] as Category[]).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 text-sm font-medium transition-colors relative ${
+              className={`text-sm tracking-wide uppercase transition-colors pb-1 ${
                 activeTab === tab
-                  ? "text-[#3B82F6]"
-                  : "text-[#737373] hover:text-[#e5e5e5]"
+                  ? "text-foreground border-b border-foreground"
+                  : "text-muted hover:text-foreground"
               }`}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              {activeTab === tab && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#3B82F6]" />
-              )}
+              {tab}
             </button>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
           {screenshots[activeTab].map((img, index) => (
             <button
               key={img.src}
               onClick={() => openLightbox(index, activeTab)}
-              className="group relative overflow-hidden rounded-lg border border-[#262626] hover:border-[#3B82F6]/50 transition-colors text-left"
+              className="group bg-surface text-left"
             >
-              <img
-                src={img.src}
-                alt={img.name}
-                className="w-full h-48 object-cover transition-transform group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white text-sm flex items-center gap-2">
-                  View <ArrowRight size={14} />
-                </span>
+              <div className="overflow-hidden">
+                <img
+                  src={img.src}
+                  alt={img.name}
+                  className="w-full h-48 object-cover"
+                />
               </div>
-              <p className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent text-white text-sm">
+              <p className="px-3 py-2.5 text-xs tracking-wide uppercase text-muted">
                 {img.name}
               </p>
             </button>
@@ -122,36 +118,38 @@ export default function GalleryPage() {
       </div>
 
       {lightbox && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 bg-background/95 flex items-center justify-center">
           <button
             onClick={closeLightbox}
-            className="absolute top-4 right-4 text-white/70 hover:text-white p-2"
+            className="absolute top-6 right-6 text-muted hover:text-foreground p-2"
           >
-            <X size={24} />
+            <X size={20} strokeWidth={1.5} />
           </button>
 
           <button
             onClick={prevImage}
-            className="absolute left-4 text-white/70 hover:text-white p-2"
+            className="absolute left-6 top-1/2 -translate-y-1/2 text-muted hover:text-foreground p-2"
           >
-            <ChevronLeft size={32} />
+            <ChevronLeft size={28} strokeWidth={1.5} />
           </button>
 
           <button
             onClick={nextImage}
-            className="absolute right-4 text-white/70 hover:text-white p-2"
+            className="absolute right-6 top-1/2 -translate-y-1/2 text-muted hover:text-foreground p-2"
           >
-            <ChevronRight size={32} />
+            <ChevronRight size={28} strokeWidth={1.5} />
           </button>
 
-          <div className="max-w-4xl max-h-[80vh] px-16">
+          <div className="max-w-5xl max-h-[85vh] px-20">
             <img
               src={lightbox.images[lightbox.index].src}
               alt={lightbox.images[lightbox.index].name}
-              className="max-w-full max-h-[75vh] object-contain rounded-lg"
+              className="max-w-full max-h-[80vh] object-contain"
             />
-            <p className="text-center text-white/70 mt-4">
-              {lightbox.images[lightbox.index].name} ({lightbox.index + 1}/{lightbox.images.length})
+            <p className="text-center text-muted text-sm mt-6 tracking-wide uppercase">
+              {lightbox.images[lightbox.index].name}
+              <span className="text-muted mx-2">/</span>
+              {lightbox.index + 1} of {lightbox.images.length}
             </p>
           </div>
         </div>

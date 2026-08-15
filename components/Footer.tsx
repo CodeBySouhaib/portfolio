@@ -1,60 +1,53 @@
-import { Github, Linkedin, Mail, Heart, Code } from "lucide-react";
+import { Github, Linkedin, Mail, Code } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-8 border-t border-[#262626]">
+    <footer className="py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Logo */}
-          <div className="font-mono text-lg">
-            <span className="text-[#3B82F6]">&lt;</span>
-            Souhaib
-            <span className="text-[#3B82F6]">/&gt;</span>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="text-sm tracking-widest uppercase font-medium">
+            Souhaib Harrabi
           </div>
 
-          {/* Copyright */}
-          <div className="text-center">
-            <p className="text-[#737373] text-sm flex items-center gap-1">
-              &copy; {currentYear} Souhaib Harrabi. Built with
-              <Heart size={14} className="text-red-500 fill-red-500" />
-              using Next.js
-            </p>
+          <div className="flex items-center gap-8 text-sm tracking-wide">
+            <span className="text-subtle">
+              &copy; {currentYear} All rights reserved.
+            </span>
             <a
               href="https://github.com/CodeBySouhaib/portfolio"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-[#525252] hover:text-[#3B82F6] transition-colors flex items-center justify-center gap-1 mt-1"
+              className="text-subtle hover:text-foreground transition-colors flex items-center gap-1.5"
             >
               <Code size={12} />
-              Yes, I built this myself. Here's the source code.
+              Source
             </a>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <a
               href="https://github.com/CodeBySouhaib"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#737373] hover:text-[#3B82F6] transition-colors"
+              className="text-xs tracking-widest uppercase text-subtle hover:text-foreground transition-colors"
             >
-              <Github size={20} />
+              GitHub
             </a>
             <a
               href="https://www.linkedin.com/in/harrabisouhaib"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#737373] hover:text-[#3B82F6] transition-colors"
+              className="text-xs tracking-widest uppercase text-subtle hover:text-foreground transition-colors"
             >
-              <Linkedin size={20} />
+              LinkedIn
             </a>
             <a
               href="mailto:harrabisouhaib@gmail.com"
-              className="text-[#737373] hover:text-[#3B82F6] transition-colors"
+              className="text-xs tracking-widest uppercase text-subtle hover:text-foreground transition-colors"
             >
-              <Mail size={20} />
+              Email
             </a>
           </div>
         </div>

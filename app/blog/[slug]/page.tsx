@@ -42,80 +42,70 @@ export default async function BlogPost({ params }: Props) {
   return (
     <main className="min-h-screen pt-24 pb-16">
       <article className="max-w-3xl mx-auto px-4 sm:px-6">
-        {/* Back link */}
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-[#737373] hover:text-[#3B82F6] transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-xs text-muted hover:text-foreground transition-colors mb-12 tracking-wide uppercase"
         >
-          <ArrowLeft size={16} />
-          Back to blog
+          <ArrowLeft size={14} strokeWidth={1.5} />
+          Back
         </Link>
 
-        {/* Header */}
-        <header className="mb-8">
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mb-4">
+        <header className="mb-12">
+          <div className="flex flex-wrap gap-x-3 gap-y-1 mb-6">
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-[#3B82F6]/10 text-[#3B82F6] rounded-lg text-sm"
+                className="text-xs text-muted tracking-widest uppercase border-b border-border pb-0.5"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          {/* Title */}
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#e5e5e5] mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-6">
             {post.title}
           </h1>
 
-          {/* Meta */}
-          <div className="flex items-center gap-4 text-[#737373]">
-            <span className="flex items-center gap-1">
-              <Calendar size={16} />
+          <div className="flex items-center gap-4 text-xs text-muted tracking-wide uppercase">
+            <span className="flex items-center gap-2">
+              <Calendar size={12} strokeWidth={1.5} />
               {new Date(post.date).toLocaleDateString("en-US", {
                 month: "long",
                 day: "numeric",
                 year: "numeric",
               })}
             </span>
-            <span className="flex items-center gap-1">
-              <Clock size={16} />
+            <span className="w-px h-3 bg-border" aria-hidden="true" />
+            <span className="flex items-center gap-2">
+              <Clock size={12} strokeWidth={1.5} />
               {post.readTime}
             </span>
           </div>
         </header>
 
-        {/* Content */}
-        <div className="prose prose-invert prose-lg max-w-none">
-          <div
-            className="text-[#b3b3b3] leading-relaxed
-              [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:text-[#e5e5e5] [&>h1]:mt-8 [&>h1]:mb-4
-              [&>h2]:text-xl [&>h2]:font-bold [&>h2]:text-[#e5e5e5] [&>h2]:mt-8 [&>h2]:mb-4
-              [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-[#e5e5e5] [&>h3]:mt-6 [&>h3]:mb-3
-              [&>p]:mb-4
-              [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:mb-4
-              [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:mb-4
-              [&>li]:mb-2
-              [&>pre]:bg-[#171717] [&>pre]:border [&>pre]:border-[#262626] [&>pre]:rounded-lg [&>pre]:p-4 [&>pre]:overflow-x-auto [&>pre]:mb-4
-              [&>code]:bg-[#171717] [&>code]:px-1.5 [&>code]:py-0.5 [&>code]:rounded [&>code]:text-[#3B82F6] [&>code]:text-sm
-              [&>blockquote]:border-l-4 [&>blockquote]:border-[#3B82F6] [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-[#737373]
-              [&>a]:text-[#3B82F6] [&>a]:underline [&>a]:hover:no-underline
-              [&>hr]:border-[#262626] [&>hr]:my-8"
-            dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
-          />
-        </div>
-
-        <p className="mt-10 pt-8 border-t border-[#262626] text-xs text-[#525252] text-center">
-          Last edit: April 2, 2026 · Today: April 2, 2026
-        </p>
+        <div
+          className="text-content leading-[1.8] text-[1.0625rem]
+            [&>h1]:text-3xl [&>h1]:font-bold [&>h1]:text-foreground [&>h1]:mt-12 [&>h1]:mb-4 [&>h1]:tracking-tight [&>h1]:leading-tight
+            [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-foreground [&>h2]:mt-10 [&>h2]:mb-3 [&>h2]:tracking-tight [&>h2]:leading-tight
+            [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-foreground [&>h3]:mt-8 [&>h3]:mb-3 [&>h3]:tracking-tight
+            [&>p]:mb-5
+            [&>ul]:list-none [&>ul]:pl-0 [&>ul]:mb-5 [&>ul]:space-y-2
+            [&>ol]:list-none [&>ol]:pl-0 [&>ol]:mb-5 [&>ol]:space-y-2
+            [&>li]:relative [&>li]:pl-5 [&>li]:before:content-['\2013\00A0'] [&>li]:before:text-muted
+            [&>ol>li]:before:content-['counter(list-item)'] [&>ol>li]:before:counter-increment-list-item [&>ol>li]:before:font-mono [&>ol>li]:before:text-xs [&>ol>li]:before:text-muted [&>ol>li]:before:w-4 [&>ol>li]:before:mr-2
+            [&>pre]:bg-transparent [&>pre]:border [&>pre]:border-border [&>pre]:rounded-lg [&>pre]:p-5 [&>pre]:overflow-x-auto [&>pre]:mb-5
+            [&>code]:bg-transparent [&>code]:text-foreground [&>code]:text-sm [&>pre>code]:text-content
+            [&>blockquote]:border-l-2 [&>blockquote]:border-border [&>blockquote]:pl-4 [&>blockquote]:text-muted [&>blockquote]:not-italic [&>blockquote]:mb-5
+            [&>a]:text-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a]:decoration-accent [&>a]:hover:decoration-foreground
+            [&>hr]:border-border [&>hr]:my-10
+            [&>img]:rounded-lg [&>img]:mb-5"
+          dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
+        />
       </article>
     </main>
   );
 }
 
-// Simple markdown to HTML converter for basic formatting
 function formatContent(content: string): string {
   return content
     // Headers

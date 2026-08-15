@@ -5,7 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { getTransition } from "@/lib/motion";
 import Image from "next/image";
-import { Github, ExternalLink, Star, Brain, Image as ImageIcon } from "lucide-react";
+import { Github, ExternalLink, Brain, Image as ImageIcon } from "lucide-react";
 
 function CrowdAnswerLogoMark() {
   return (
@@ -18,11 +18,11 @@ function CrowdAnswerLogoMark() {
         className="absolute inset-0 rounded-full opacity-90"
         style={{
           background:
-            "radial-gradient(circle at 50% 40%, rgba(0, 199, 255, 0.18), rgba(0, 199, 255, 0.04) 45%, transparent 70%)",
+            "radial-gradient(circle at 50% 40%, rgba(var(--project-accent-rgb), 0.18), rgba(var(--project-accent-rgb), 0.04) 45%, transparent 70%)",
         }}
       />
       <div
-        className="relative flex h-[52px] w-[52px] items-center justify-center rounded-full border border-[#00C7FF]/35 bg-white/[0.06] shadow-[0_0_20px_rgba(0,199,255,0.12)]"
+        className="relative flex h-[52px] w-[52px] items-center justify-center rounded-full border border-project-accent/35 bg-white/[0.06]"
         aria-hidden
       >
         <Brain className="h-9 w-9 text-white" strokeWidth={1.35} />
@@ -124,9 +124,9 @@ export default function Projects() {
   const otherProjects = projects.filter((p) => !p.featured);
 
   return (
-    <section id="projects" className="py-24 bg-[#0d0d0d]">
+    <section id="projects" className="py-32 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Section Header */}
+        {/* Editorial Section Header */}
         <motion.div
           ref={ref}
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
@@ -134,16 +134,15 @@ export default function Projects() {
           transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            <span className="text-[#3B82F6] font-mono">&lt;</span>
-            Projects
-            <span className="text-[#3B82F6] font-mono">/&gt;</span>
+          <p className="editorial-label mb-3">Projects</p>
+          <h2 className="editorial-heading text-3xl sm:text-4xl text-foreground mb-5">
+            Selected Work
           </h2>
-          <div className="w-20 h-1 bg-[#3B82F6] mx-auto rounded-full" />
+          <div className="editorial-divider mx-auto" />
         </motion.div>
 
         {/* Featured projects */}
-        <div className="space-y-12 mb-12">
+        <div className="space-y-12 mb-16">
           {featuredProjects.map((featuredProject, fi) => (
             <motion.div
               key={featuredProject.title}
@@ -154,21 +153,8 @@ export default function Projects() {
                 delay: 0.2 + fi * 0.12,
               })}
             >
-              <div className="bg-[#171717] border border-[#262626] rounded-xl overflow-hidden card-hover ring-1 ring-white/[0.06] shadow-[0_0_40px_-12px_rgba(59,130,246,0.35)]">
+              <div className="bg-surface border border-border rounded-lg overflow-hidden box-hover">
                 <div className="p-6 sm:p-8">
-                  <div className="flex flex-wrap items-center gap-2 mb-4">
-                    <Star className="w-5 h-5 text-yellow-500 fill-yellow-500 drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
-                    <span className="text-sm text-yellow-500 font-medium">
-                      Featured Project
-                    </span>
-                    {"featuredBadge" in featuredProject &&
-                      featuredProject.featuredBadge && (
-                        <span className="text-xs font-semibold uppercase tracking-wide px-2.5 py-0.5 rounded-full bg-[#00C7FF]/15 text-[#5ecfff] border border-[#00C7FF]/35">
-                          {featuredProject.featuredBadge}
-                        </span>
-                      )}
-                  </div>
-
                   <div className="flex items-center gap-4 mb-4">
                     {"logoType" in featuredProject &&
                     featuredProject.logoType === "crowdanswer" ? (
@@ -176,9 +162,9 @@ export default function Projects() {
                     ) : (
                       featuredProject.logo && (
                         <div
-                          className={`relative w-16 h-16 flex-shrink-0 rounded-xl p-2 ${
+                          className={`relative w-16 h-16 flex-shrink-0 rounded-lg p-2 ${
                             featuredProject.logo.endsWith(".svg")
-                              ? "bg-[#0B0D1A] border border-[#00C7FF]/35"
+                              ? "bg-project-dark border border-project-accent/35"
                               : "bg-white"
                           }`}
                         >
@@ -193,27 +179,29 @@ export default function Projects() {
                       )
                     )}
                     <div>
-                      <h3 className="text-2xl font-bold text-[#e5e5e5]">
+                      <h3 className="text-2xl font-bold text-foreground">
                         {featuredProject.title}
                       </h3>
-                      <p className="text-[#3B82F6] text-sm">
+                      <p className="text-muted text-sm font-mono">
                         {featuredProject.subtitle}
                       </p>
                     </div>
                   </div>
-                  <p className="text-[#737373] mb-6">{featuredProject.description}</p>
+                  <p className="text-muted mb-6">
+                    {featuredProject.description}
+                  </p>
 
                   <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-[#e5e5e5] mb-3">
+                    <h4 className="text-sm font-semibold text-foreground mb-3">
                       Key Features
                     </h4>
                     <ul className="grid sm:grid-cols-2 gap-2">
                       {featuredProject.features?.map((feature, i) => (
                         <li
                           key={i}
-                          className="flex items-start gap-2 text-sm text-[#737373]"
+                          className="flex items-start gap-2 text-sm text-muted"
                         >
-                          <span className="text-[#3B82F6]">•</span>
+                          <span className="text-faint">•</span>
                           {feature}
                         </li>
                       ))}
@@ -224,7 +212,7 @@ export default function Projects() {
                     {featuredProject.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-[#3B82F6]/10 border border-[#3B82F6]/30 text-[#3B82F6] rounded-lg text-sm"
+                        className="px-2.5 py-1 border border-border rounded-md text-xs font-mono text-muted"
                       >
                         {tech}
                       </span>
@@ -234,10 +222,10 @@ export default function Projects() {
                   <div className="flex flex-wrap gap-3">
                     {"repoPrivate" in featuredProject &&
                     featuredProject.repoPrivate ? (
-                      <div className="flex items-center gap-2 px-4 py-2 bg-[#0a0a0a] border border-[#262626] rounded-lg text-sm text-[#737373] cursor-default">
+                      <div className="flex items-center gap-2 px-4 py-2 border border-border rounded-md text-sm text-muted cursor-default">
                         <Github size={16} />
                         <span>Private Repo</span>
-                        <span className="text-xs text-[#525252]">
+                        <span className="text-xs text-faint">
                           • Contact for access
                         </span>
                       </div>
@@ -246,7 +234,7 @@ export default function Projects() {
                         href={featuredProject.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-[#0a0a0a] border border-[#262626] rounded-lg text-sm text-[#e5e5e5] hover:border-[#3B82F6]/50 hover:text-[#3B82F6] transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 border border-border rounded-md text-sm text-foreground hover:border-muted hover:bg-surface active:scale-95 transition-all duration-200"
                       >
                         <Github size={16} />
                         View on GitHub
@@ -257,7 +245,7 @@ export default function Projects() {
                         href={featuredProject.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-[#3B82F6] text-white rounded-lg text-sm hover:bg-[#2563EB] transition-colors font-medium"
+                        className="flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-md text-sm hover:bg-accent-hover active:scale-95 transition-all duration-200 shadow-[0_0_15px_var(--accent-glow-medium)] hover:shadow-[0_0_25px_var(--accent-glow-stronger)]"
                       >
                         <ExternalLink size={16} />
                         Live Demo
@@ -267,7 +255,7 @@ export default function Projects() {
                       featuredProject.caseStudyUrl && (
                         <a
                           href={featuredProject.caseStudyUrl}
-                          className="flex items-center gap-2 px-4 py-2 bg-[#171717] border border-[#3B82F6]/40 text-[#3B82F6] rounded-lg text-sm hover:bg-[#3B82F6]/10 transition-colors font-medium"
+                          className="flex items-center gap-2 px-4 py-2 border border-border rounded-md text-sm text-foreground hover:border-muted hover:bg-surface active:scale-95 transition-all duration-200"
                         >
                           <ExternalLink size={16} />
                           Read Case Study
@@ -276,7 +264,7 @@ export default function Projects() {
                     {featuredProject.galleryUrl && (
                       <a
                         href={featuredProject.galleryUrl}
-                        className="flex items-center gap-2 px-4 py-2 bg-[#171717] border border-[#262626] text-[#737373] rounded-lg text-sm hover:text-[#e5e5e5] hover:border-[#3B82F6]/50 transition-colors font-medium"
+                        className="flex items-center gap-2 px-4 py-2 border border-border rounded-md text-sm text-foreground hover:border-muted hover:bg-surface active:scale-95 transition-all duration-200"
                       >
                         <ImageIcon size={16} />
                         View Screenshots
@@ -300,10 +288,10 @@ export default function Projects() {
                 duration: 0.5,
                 delay: 0.3 + index * 0.1,
               })}
-              className="bg-[#171717] border border-[#262626] rounded-xl p-6 card-hover group"
+              className="bg-surface border border-border rounded-lg p-6 box-hover"
             >
               <div className="flex items-start justify-between mb-3 gap-2">
-                <h3 className="text-lg font-bold text-[#e5e5e5] group-hover:text-[#3B82F6] transition-colors">
+                <h3 className="text-lg font-bold text-foreground">
                   {project.title}
                 </h3>
                 <div className="flex items-center gap-1 flex-shrink-0">
@@ -312,7 +300,7 @@ export default function Projects() {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 hover:text-[#3B82F6] transition-colors"
+                      className="p-2 border border-border rounded-md hover:border-muted hover:bg-surface hover:text-foreground active:scale-95 transition-all duration-200"
                       title="Live demo"
                     >
                       <ExternalLink size={18} />
@@ -322,7 +310,7 @@ export default function Projects() {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 hover:text-[#3B82F6] transition-colors"
+                    className="p-2 border border-border rounded-md hover:border-muted hover:bg-surface hover:text-foreground active:scale-95 transition-all duration-200"
                     title="Repository"
                   >
                     <Github size={18} />
@@ -330,16 +318,18 @@ export default function Projects() {
                 </div>
               </div>
               {"subtitle" in project && project.subtitle && (
-                <p className="text-xs text-[#3B82F6] mb-2 -mt-1">
+                <p className="text-xs text-muted font-mono mb-2 -mt-1">
                   {project.subtitle}
                 </p>
               )}
-              <p className="text-[#737373] text-sm mb-4">{project.description}</p>
+              <p className="text-muted text-sm mb-4">
+                {project.description}
+              </p>
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="px-2 py-1 bg-[#0a0a0a] border border-[#262626] rounded text-xs text-[#737373]"
+                    className="px-2.5 py-1 border border-border rounded-md text-xs font-mono text-muted"
                   >
                     {tech}
                   </span>
@@ -348,7 +338,7 @@ export default function Projects() {
               {"caseStudyUrl" in project && project.caseStudyUrl && (
                 <a
                   href={project.caseStudyUrl}
-                  className="inline-flex items-center gap-1.5 mt-4 text-sm text-[#3B82F6] hover:underline"
+                  className="inline-flex items-center gap-1.5 mt-4 text-sm text-muted hover:text-foreground transition-colors"
                 >
                   Read case study
                   <ExternalLink size={14} />
@@ -369,7 +359,7 @@ export default function Projects() {
             href="https://github.com/CodeBySouhaib?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-[#3B82F6] hover:underline"
+            className="inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors"
           >
             View all projects on GitHub
             <ExternalLink size={16} />

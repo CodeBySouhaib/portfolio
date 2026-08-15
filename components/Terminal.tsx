@@ -32,7 +32,7 @@ const COMMANDS: Record<string, string[]> = {
   ],
   about: [
     "Hey! I'm Souhaib Harrabi",
-    "A Full Stack Developer based in Dubai, UAE",
+    "A Full Stack Developer based in Tunis, Tunisia",
     "I build scalable web & mobile apps",
     "Currently open to new opportunities!",
   ],
@@ -369,7 +369,7 @@ export default function Terminal() {
       }, 100);
       setTimeout(() => {
         clearInterval(interval);
-        document.body.style.backgroundColor = "#0a0a0a";
+        document.body.style.backgroundColor = "#111111";
       }, 3000);
       return;
     }
@@ -436,7 +436,7 @@ export default function Terminal() {
       setTimeout(() => {
         setLines(prev => [...prev, { type: "output", content: "" }]);
         setLines(prev => [...prev, { type: "output", content: "Just kidding, you're not that cool 😎" }]);
-        document.body.style.backgroundColor = "#0a0a0a";
+        document.body.style.backgroundColor = "#111111";
         document.getElementById("hack-overlay")?.remove();
       }, 4000);
       
@@ -516,15 +516,15 @@ export default function Terminal() {
       transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.8 })}
       className="w-full max-w-2xl mx-auto mt-12"
     >
-      <div className="bg-[#0d0d0d] border border-[#262626] rounded-lg overflow-hidden shadow-2xl">
+      <div className="bg-background border border-border rounded-lg overflow-hidden shadow-2xl">
         {/* Terminal Header */}
-        <div className="flex items-center gap-2 px-4 py-3 bg-[#171717] border-b border-[#262626]">
+        <div className="flex items-center gap-2 px-4 py-3 bg-surface border-b border-border">
           <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-            <div className="w-3 h-3 rounded-full bg-[#27ca3f]" />
+            <div className="w-3 h-3 rounded-full bg-terminal-red" />
+            <div className="w-3 h-3 rounded-full bg-terminal-yellow" />
+            <div className="w-3 h-3 rounded-full bg-terminal-green" />
           </div>
-          <span className="ml-2 text-xs text-[#737373] font-mono">
+          <span className="ml-2 text-xs text-muted font-mono">
             souhaib@portfolio ~ bash
           </span>
         </div>
@@ -537,7 +537,7 @@ export default function Terminal() {
         >
           {/* Show game if active */}
           {gameActive ? (
-            <div className="text-[#27ca3f]">
+            <div className="text-terminal-green">
               {renderGame().map((line, i) => (
                 <div key={i} className="whitespace-pre">{line}</div>
               ))}
@@ -548,36 +548,36 @@ export default function Terminal() {
                 <div key={index} className="mb-1">
                   {line.type === "input" ? (
                     <div className="flex">
-                      <span className="text-[#27ca3f]">souhaib</span>
-                      <span className="text-[#737373]">@</span>
-                      <span className="text-[#3B82F6]">portfolio</span>
-                      <span className="text-[#737373] mx-1">$</span>
-                      <span className="text-[#e5e5e5]">{line.content}</span>
+                      <span className="text-terminal-green">souhaib</span>
+                      <span className="text-muted">@</span>
+                      <span className="text-accent">portfolio</span>
+                      <span className="text-muted mx-1">$</span>
+                      <span className="text-foreground">{line.content}</span>
                     </div>
                   ) : (
-                    <div className="text-[#a3a3a3] whitespace-pre-wrap">{line.content}</div>
+                    <div className="text-subtle-text whitespace-pre-wrap">{line.content}</div>
                   )}
                 </div>
               ))}
 
               {/* Current Input Line */}
               <div className="flex items-center">
-                <span className="text-[#27ca3f]">souhaib</span>
-                <span className="text-[#737373]">@</span>
-                <span className="text-[#3B82F6]">portfolio</span>
-                <span className="text-[#737373] mx-1">$</span>
+                <span className="text-terminal-green">souhaib</span>
+                <span className="text-muted">@</span>
+                <span className="text-accent">portfolio</span>
+                <span className="text-muted mx-1">$</span>
                 <input
                   ref={inputRef}
                   type="text"
                   value={currentInput}
                   onChange={(e) => setCurrentInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  className="flex-1 bg-transparent outline-none text-[#e5e5e5] caret-[#3B82F6]"
+                  className="flex-1 bg-transparent outline-none text-foreground caret-accent"
                   autoFocus
                   spellCheck={false}
                   autoComplete="off"
                 />
-                <span className="w-2 h-5 bg-[#3B82F6] animate-blink" />
+                <span className="w-2 h-5 bg-accent animate-blink" />
               </div>
             </>
           )}
@@ -594,7 +594,7 @@ export default function Terminal() {
         </div>
 
         {/* Terminal Footer */}
-        <div className="px-4 py-2 bg-[#171717] border-t border-[#262626] text-xs text-[#525252] font-mono">
+        <div className="px-4 py-2 bg-surface border-t border-border text-xs text-faint font-mono">
           Try: help, about, skills, neofetch, sudo hire-me
         </div>
       </div>

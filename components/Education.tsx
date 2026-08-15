@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
-import { GraduationCap, Calendar, MapPin } from "lucide-react";
+import { GraduationCap, Calendar } from "lucide-react";
 
 const education = [
   {
@@ -13,7 +13,7 @@ const education = [
     period: "September 2025 – June 2027",
     status: "In Progress",
     description:
-      "Pursuing advanced studies with focus on software engineering, cloud technologies, and distributed systems.",
+      "2-year program. Completed first year with moyenne 16 — top 1 of the class. Focus: software engineering, cloud technologies, and distributed systems.",
   },
   {
     degree: "Bachelor's Degree in Computer Science",
@@ -34,9 +34,17 @@ const education = [
 ];
 
 const languages = [
-  { name: "Arabic", level: "Native", percentage: 100 },
-  { name: "English", level: "Intermediate", percentage: 60 },
-  { name: "French", level: "Intermediate", percentage: 60 },
+  { name: "Arabic", level: "Native" },
+  { name: "English", level: "Intermediate" },
+  { name: "French", level: "Intermediate" },
+];
+
+const goals = [
+  "Get rich or debug trying 💰",
+  "Contribute to open-source",
+  "Land a software engineering role",
+  "Learn AWS/Azure",
+  "Master microservices",
 ];
 
 export default function Education() {
@@ -45,7 +53,7 @@ export default function Education() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="education" className="py-24">
+    <section id="education" className="py-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
@@ -55,57 +63,58 @@ export default function Education() {
           transition={getTransition(reduceMotion, { duration: 0.5 })}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            <span className="text-[#3B82F6] font-mono">&lt;</span>
+          <p className="editorial-label mb-3">Education</p>
+          <h2 className="editorial-heading text-3xl sm:text-4xl text-foreground mb-5">
             Education
-            <span className="text-[#3B82F6] font-mono">/&gt;</span>
           </h2>
-          <div className="w-20 h-1 bg-[#3B82F6] mx-auto rounded-full" />
+          <div className="editorial-divider mx-auto" />
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Education Cards */}
-          <div className="lg:col-span-2 space-y-6">
-            {education.map((edu, index) => (
-              <motion.div
-                key={edu.degree}
-                initial={reduceMotion ? false : { opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={getTransition(reduceMotion, {
-                  duration: 0.5,
-                  delay: index * 0.2,
-                })}
-                className="bg-[#171717] border border-[#262626] rounded-xl p-6 card-hover"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-[#3B82F6]/10 rounded-lg shrink-0">
-                    <GraduationCap className="w-6 h-6 text-[#3B82F6]" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between gap-4 mb-2">
-                      <h3 className="text-lg font-bold text-[#e5e5e5]">
-                        {edu.degree}
-                      </h3>
-                      <span
-                        className={`px-2 py-1 rounded text-xs font-medium shrink-0 ${
-                          edu.status === "In Progress"
-                            ? "bg-green-500/10 text-green-400 border border-green-500/30"
-                            : "bg-[#3B82F6]/10 text-[#3B82F6] border border-[#3B82F6]/30"
-                        }`}
-                      >
-                        {edu.status}
-                      </span>
+          {/* Education List */}
+          <div className="lg:col-span-2">
+            <div className="space-y-4">
+              {education.map((edu, index) => (
+                <motion.div
+                  key={edu.degree}
+                  initial={reduceMotion ? false : { opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={getTransition(reduceMotion, {
+                    duration: 0.5,
+                    delay: index * 0.2,
+                  })}
+                  className="border border-border rounded-lg p-5 box-hover"
+                  style={{ background: 'var(--card-gradient)' }}
+                >
+                  <div className="flex items-start gap-4">
+                    <GraduationCap className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between gap-4">
+                        <h3 className="text-lg font-bold text-foreground">
+                          {edu.degree}
+                        </h3>
+                        <span className="px-2 py-1 border border-border text-muted text-xs font-mono shrink-0">
+                          {edu.status}
+                        </span>
+                      </div>
+                      <p className="text-accent text-sm mt-1">
+                        {edu.institution}
+                      </p>
+                      <div className="flex items-center gap-2 text-muted text-sm mt-1">
+                        <Calendar size={14} />
+                        {edu.period}
+                      </div>
+                      <p className="text-muted text-sm mt-2">
+                        {edu.description}
+                      </p>
                     </div>
-                    <p className="text-[#3B82F6] text-sm mb-2">{edu.institution}</p>
-                    <div className="flex items-center gap-2 text-[#737373] text-sm mb-3">
-                      <Calendar size={14} />
-                      {edu.period}
-                    </div>
-                    <p className="text-[#737373] text-sm">{edu.description}</p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                  {index < education.length - 1 && (
+                    <div className="border-t border-subtle-border mt-4" />
+                  )}
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* Sidebar */}
@@ -114,51 +123,47 @@ export default function Education() {
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, x: 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.4 })}
-              className="bg-[#171717] border border-[#262626] rounded-xl p-6"
+              transition={getTransition(reduceMotion, {
+                duration: 0.5,
+                delay: 0.4,
+              })}
+              className="border border-border rounded-lg p-5 box-hover"
+              style={{ background: 'var(--card-gradient)' }}
             >
-              <h3 className="text-lg font-bold text-[#e5e5e5] mb-4 font-mono">
-                {`// Languages`}
-              </h3>
-              <div className="space-y-4">
+              <p className="editorial-label mb-3">{'// Languages'}</p>
+              <div className="space-y-2">
                 {languages.map((lang) => (
-                  <div key={lang.name}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[#e5e5e5]">{lang.name}</span>
-                      <span className="text-[#737373] text-sm">{lang.level}</span>
-                    </div>
-                    <div className="w-full bg-[#262626] rounded-full h-2">
-                      <div
-                        className="bg-[#3B82F6] h-2 rounded-full transition-all duration-500"
-                        style={{ width: `${lang.percentage}%` }}
-                      />
-                    </div>
+                  <div key={lang.name} className="flex justify-between">
+                    <span className="text-foreground">{lang.name}</span>
+                    <span className="font-mono text-accent">{lang.level}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Interests */}
+            {/* Hobbies */}
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, x: 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.5 })}
-              className="bg-[#171717] border border-[#262626] rounded-xl p-6"
+              transition={getTransition(reduceMotion, {
+                duration: 0.5,
+                delay: 0.5,
+              })}
+              className="border border-border rounded-lg p-5 box-hover"
+              style={{ background: 'var(--card-gradient)' }}
             >
-              <h3 className="text-lg font-bold text-[#e5e5e5] mb-4 font-mono">
-                {`// Hobbies`}
-              </h3>
-              <div className="space-y-3">
-                <div className="p-3 bg-[#0a0a0a] rounded-lg border border-[#262626]">
-                  <p className="text-[#e5e5e5] font-medium mb-1">Muay Thai</p>
-                  <p className="text-[#737373] text-sm">
+              <p className="editorial-label mb-3">{'// Hobbies'}</p>
+              <div className="space-y-2">
+                <div>
+                  <p className="text-foreground font-medium">Muay Thai</p>
+                  <p className="text-muted text-sm">
                     Training regularly to develop discipline, mental toughness, and
                     strategic mindset.
                   </p>
                 </div>
-                <div className="p-3 bg-[#0a0a0a] rounded-lg border border-[#262626]">
-                  <p className="text-[#e5e5e5] font-medium mb-1">Musculation</p>
-                  <p className="text-[#737373] text-sm">
+                <div>
+                  <p className="text-foreground font-medium">Musculation</p>
+                  <p className="text-muted text-sm">
                     Gym & weight training to build strength, endurance, and maintain
                     a healthy lifestyle.
                   </p>
@@ -170,28 +175,25 @@ export default function Education() {
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, x: 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.6 })}
-              className="bg-[#171717] border border-[#262626] rounded-xl p-6"
+              transition={getTransition(reduceMotion, {
+                duration: 0.5,
+                delay: 0.6,
+              })}
+              className="border border-border rounded-lg p-5 box-hover"
+              style={{ background: 'var(--card-gradient)' }}
             >
-              <h3 className="text-lg font-bold text-[#e5e5e5] mb-4 font-mono">
-                {`// 2026 Goals`}
-              </h3>
-              <ul className="space-y-2">
-                {[
-                  "Get rich or debug trying 💰",
-                  "Contribute to open-source",
-                  "Land a software engineering role",
-                  "Learn AWS/Azure",
-                  "Master microservices",
-                ].map((goal, i) => (
-                  <li key={i} className="flex items-center gap-2 text-[#737373] text-sm">
-                    <span className="w-5 h-5 bg-[#3B82F6]/10 rounded flex items-center justify-center text-[#3B82F6] text-xs font-bold">
-                      {i + 1}
-                    </span>
+              <p className="editorial-label mb-3">{'// 2026 Goals'}</p>
+              <ol className="space-y-2">
+                {goals.map((goal, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2 text-foreground"
+                  >
+                    <span className="font-mono text-accent">{i + 1}.</span>
                     {goal}
                   </li>
                 ))}
-              </ul>
+              </ol>
             </motion.div>
           </div>
         </div>
