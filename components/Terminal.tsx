@@ -32,9 +32,9 @@ const COMMANDS: Record<string, string[]> = {
   ],
   about: [
     "Hey! I'm Souhaib Harrabi",
-    "A Full Stack Developer based in Tunis, Tunisia",
+    "A Full-Stack & Mobile Developer",
     "I build scalable web & mobile apps",
-    "Currently open to new opportunities!",
+    "Currently open to remote opportunities!",
   ],
   skills: [
     "Backend:  ASP.NET Core, Node.js, PostgreSQL",
@@ -69,9 +69,9 @@ const COMMANDS: Record<string, string[]> = {
     "    (o o)      -----------------",
     "    | O |      OS: Web Browser",
     "    |   |      Host: souhaib.dev",
-    "   _'---'_     Uptime: since 2021",
+    "   _'---'_     Uptime: coding since 2022",
     "  /  |||  \\    Languages: TS, C#, Dart",
-    "    ^^ ^^      Framework: Next.js 14",
+    "    ^^ ^^      Framework: Next.js 16",
     "              Theme: Dark Mode",
     "              Terminal: Interactive",
     "              Coffee: Unlimited",
@@ -516,9 +516,9 @@ export default function Terminal() {
       transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.8 })}
       className="w-full max-w-2xl mx-auto mt-12"
     >
-      <div className="bg-background border border-border rounded-lg overflow-hidden shadow-2xl">
+      <div className="glow-frame bg-background/85 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden">
         {/* Terminal Header */}
-        <div className="flex items-center gap-2 px-4 py-3 bg-surface border-b border-border">
+        <div className="flex items-center gap-2 px-4 py-3 bg-white/[0.03] border-b border-white/10">
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-terminal-red" />
             <div className="w-3 h-3 rounded-full bg-terminal-yellow" />
@@ -573,7 +573,7 @@ export default function Terminal() {
                   onChange={(e) => setCurrentInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   className="flex-1 bg-transparent outline-none text-foreground caret-accent"
-                  autoFocus
+                  aria-label="Terminal command input"
                   spellCheck={false}
                   autoComplete="off"
                 />

@@ -10,9 +10,9 @@ import { Menu, X } from "lucide-react";
 const navItems = [
   { href: "#home", label: "Home", isHash: true },
   { href: "#about", label: "About", isHash: true },
-  { href: "#skills", label: "Skills", isHash: true },
-  { href: "#experience", label: "Experience", isHash: true },
   { href: "#projects", label: "Projects", isHash: true },
+  { href: "#experience", label: "Experience", isHash: true },
+  { href: "#skills", label: "Skills", isHash: true },
   { href: "#education", label: "Education", isHash: true },
   { href: "/blog", label: "Blog", isHash: false },
   { href: "#contact", label: "Contact", isHash: true },
@@ -55,7 +55,7 @@ export default function Navigation() {
         transition={getTransition(reduceMotion, { duration: 0.35 })}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-background/80 backdrop-blur-md border-b border-subtle-border"
+            ? "bg-background/60 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_8px_32px_-12px_rgba(52,211,153,0.22)]"
             : "bg-transparent"
         }`}
       >
@@ -63,9 +63,9 @@ export default function Navigation() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="font-mono text-lg font-bold tracking-tight">
-              <span className="text-accent">&lt;</span>
+              <span className="text-[var(--accent-text)] [text-shadow:0_0_12px_rgba(52,211,153,0.8)]">&lt;</span>
               Souhaib
-              <span className="text-accent">/&gt;</span>
+              <span className="text-[var(--accent-text)] [text-shadow:0_0_12px_rgba(52,211,153,0.8)]">/&gt;</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -74,13 +74,19 @@ export default function Navigation() {
                 <a
                   key={item.href}
                   href={isHome || !item.isHash ? item.href : `/${item.href}`}
-                  className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                     activeSection === item.href.slice(1)
                       ? "text-foreground"
                       : "text-muted hover:text-foreground"
                   }`}
                 >
                   {item.label}
+                  {activeSection === item.href.slice(1) && (
+                    <span
+                      aria-hidden
+                      className="absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-gradient-to-r from-[#34D399] to-[#22D3EE] shadow-[0_0_10px_rgba(52,211,153,0.9)]"
+                    />
+                  )}
                 </a>
               ))}
             </div>
@@ -88,7 +94,9 @@ export default function Navigation() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-background transition-colors"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
+              className="md:hidden p-2 rounded-lg hover:bg-white/5 transition-colors"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

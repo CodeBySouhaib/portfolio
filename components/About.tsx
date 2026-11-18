@@ -4,14 +4,14 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
-import { Code2, GitPullRequest, Calendar, Languages, Zap, Rocket } from "lucide-react";
+import { Code2, Briefcase, Rocket, Gauge, GraduationCap, Languages } from "lucide-react";
 
 const stats = [
-  { icon: Code2, value: "1183", label: "GitHub Contributions" },
-  { icon: GitPullRequest, value: "3x", label: "Pull Shark" },
-  { icon: Zap, value: "3x", label: "Quickdraw" },
-  { icon: Rocket, value: "3x", label: "YOLO" },
-  { icon: Calendar, value: "5", label: "Years Experience" },
+  { icon: Code2, value: "1,200+", label: "GitHub Contributions" },
+  { icon: Briefcase, value: "4", label: "Internships" },
+  { icon: Rocket, value: "3", label: "Apps Shipped Solo" },
+  { icon: Gauge, value: "95+", label: "Lighthouse Score (DUO)" },
+  { icon: GraduationCap, value: "Top 3", label: "Master's Class Rank" },
   { icon: Languages, value: "3", label: "Languages" },
 ];
 
@@ -50,9 +50,9 @@ export default function About() {
           >
             <p className="text-lg sm:text-xl text-foreground leading-relaxed">
               Hey there! I&apos;m a full-stack developer passionate about building
-              secure, scalable web and mobile applications. Recent Bachelor&apos;s
-              graduate in Computer Science from ISET Djerba (2025), currently
-              pursuing my Master&apos;s degree.
+              secure, scalable web and mobile applications. I hold a Licence in
+              Information Systems Development (2025) and I&apos;m in the final year
+              of a Master&apos;s in Mobile Application Engineering (IAM).
             </p>
             <p className="text-lg sm:text-xl text-foreground leading-relaxed">
               I work primarily with{" "}

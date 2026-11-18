@@ -13,12 +13,12 @@ const education = [
     period: "September 2025 – June 2027",
     status: "In Progress",
     description:
-      "2-year program. Completed first year with moyenne 16 — top 1 of the class. Focus: software engineering, cloud technologies, and distributed systems.",
+      "2-year program, now in the final year. Finished first year with a 16/20 average, ranked top 3 in my class. Focus: software engineering, cloud technologies, and distributed systems.",
   },
   {
     degree: "Bachelor's Degree — DSI Développement des Systèmes d'Information",
     institution: "Higher Institute of Technological Studies of Djerba",
-    period: "September 2022 – September 2025",
+    period: "September 2022 – June 2025",
     status: "Completed",
     description:
       "Comprehensive program in information technologies and computer science. Capstone project: full-stack e-commerce platform with ASP.NET Core, Vue.js 3, PostgreSQL, and Docker.",

@@ -34,17 +34,17 @@ function CrowdAnswerLogoMark() {
 const projects = [
   {
     title: "CrowdAnswer",
-    subtitle: "Mobile-first social Q&A · Flutter 3.41 · Supabase · MIT",
+    subtitle: "Social Q&A mobile app · Built solo",
     description:
-      "CrowdAnswer is a social platform where users post short questions or situations, the community responds with advice and opinions, and votes determine the best answer — Reddit meets Twitter, built for collective decision-making. PostgreSQL via Supabase spans five domains (users, content, engagement, social, moderation) with Row Level Security on every table; OTP email runs through Resend Edge Functions; feeds, DMs, and notifications use Supabase Realtime. Glassmorphism UI (frosted glass, neon accents, animated backgrounds), hosted on Vercel for web.",
+      "Post a question, the community answers, votes pick the best one. A full social platform built alone, from database to deployment.",
+    metrics: ["50+ features", "215 commits", "8 sprints", "RLS on every table"],
     features: [
-      "Authentication & accounts: email + 6-digit OTP (Resend), Google OAuth, magic link, biometric login (local_auth), guest read-only mode, password reset, 24h account-deletion grace, public/private profiles, full username history",
-      "Content & publishing: status posts with images (jpg/png/gif/webp, 5 MB), nine categories, up to five tags with trending search, polls (2–10 options, single/multi-vote), edit tracking with is_edited, 500-character limit, background image uploads",
-      "Comments & votes: 200-character comments, upvote/downvote scoring (upvotes − downvotes), TOP ANSWER badge on the top comment, @mentions of mutual followers with real-time dropdown filtering",
-      "Social graph: follow/unfollow, follow requests for private profiles, bidirectional block filtering (feed, comments, search, mentions), six reaction types with long-press picker, bookmarks, profile views (one per visitor per day)",
-      "Messaging & realtime: 1-to-1 DMs with Supabase Realtime, message requests, unread counts, typing indicator, image attachments; followed-user posts push to feeds in realtime",
-      "Notifications & admin: fifteen notification types (comments, replies, top answer, follows, mentions, moderation, etc.); admin panel with dashboard, user ban/unban and promotion, reports workflow, content hide/restore with owner notifications",
+      "Email OTP, Google, magic link & biometric sign-in",
+      "Real-time feed, DMs with read receipts, 15 notification types",
+      "Vote-ranked answers, polls, reactions, @mentions",
+      "Admin panel: reports, bans, content moderation",
     ],
+    screenshot: "/projects/crowd.webp",
     technologies: [
       "Flutter",
       "Supabase",
@@ -64,9 +64,10 @@ const projects = [
   },
   {
     title: "Soukify",
-    subtitle: "Multi-Vendor B2B Marketplace | PFE 2025 at Awel",
+    subtitle: "Multi-Vendor B2B Marketplace | PFE 2025 at AWEL",
     description:
-      "Full-featured B2B multi-vendor marketplace with 37 database entities, real-time SignalR chat, quote-to-invoice workflows, commission tracking, and smart product recommendations.",
+      "Full-featured B2B multi-vendor marketplace built from scratch as the only developer during my final-year internship.",
+    metrics: ["33 DB entities", "3 dashboards", "Real-time SignalR", "1 developer"],
     features: [
       "Multi-vendor architecture with enterprise hierarchy",
       "Real-time chat with SignalR (product-specific conversations)",
@@ -91,27 +92,29 @@ const projects = [
     repoPrivate: true,
   },
   {
-    title: "Real-Time Chat Application",
+    title: "DUO",
+    subtitle: "Real-time task manager for couples",
     description:
-      "Cross-platform chat app with instant messaging and presence detection using React Native and ASP.NET Core SignalR.",
-    technologies: ["React Native", "ASP.NET Core", "SignalR", "Real-time"],
-    github: "https://github.com/CodeBySouhaib/realtime-chat",
+      "Started as a Figma assignment, shipped as a production app instead.",
+    metrics: ["Lighthouse 95+", "208 KB gzipped", "EN / FR / AR + RTL", "WCAG 2.1"],
+    features: [
+      "Create or join a duo with a 4-digit code",
+      "Tasks for Me / Partner / Together, in-task comments",
+      "Live presence and real-time notifications",
+      "Dark/light mode synced to the system",
+    ],
+    technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Neon PostgreSQL", "Vercel"],
+    github: "https://github.com/CodeBySouhaib/couples-task-manager",
+    liveUrl: "https://duodo-fawn.vercel.app",
+    screenshot: "/projects/duo.webp",
+    featured: true,
   },
   {
-    title: "Flutter PDF Manager",
+    title: "Pointage",
+    subtitle: "Smart attendance platform · Saboura internship",
     description:
-      "Mobile application for scanning documents, converting to PDF, and managing files with cloud synchronization.",
-    technologies: ["Flutter", "Dart", "Document Management", "Cross-Platform"],
-    // TODO: replace with public repo URL when available
-    github: "https://github.com/CodeBySouhaib",
-  },
-  {
-    title: "Vue.js Task Manager",
-    description:
-      "Full-featured task management application with JWT authentication, real-time updates, and persistent storage.",
-    technologies: ["Vue.js 3", "JWT Auth", "Pinia", "Task Management"],
-    // TODO: replace with public repo URL when available
-    github: "https://github.com/CodeBySouhaib",
+      "Attendance and time-tracking platform built solo: QR/NFC check-in with duplicate-scan prevention, role-based dashboards for HR and team leads, CSV/PDF analytics and automated email summaries.",
+    technologies: ["ASP.NET Core", "C#", "Entity Framework", "PostgreSQL", "Vue.js 3"],
   },
 ];
 
@@ -124,7 +127,7 @@ export default function Projects() {
   const otherProjects = projects.filter((p) => !p.featured);
 
   return (
-    <section id="projects" className="py-32 bg-background">
+    <section id="projects" className="py-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Editorial Section Header */}
         <motion.div
@@ -153,8 +156,15 @@ export default function Projects() {
                 delay: 0.2 + fi * 0.12,
               })}
             >
-              <div className="bg-surface border border-border rounded-lg overflow-hidden box-hover">
-                <div className="p-6 sm:p-8">
+              <div className="bg-surface border border-border rounded-xl overflow-hidden box-hover">
+                <div
+                  className={
+                    "screenshot" in featuredProject && featuredProject.screenshot
+                      ? "grid lg:grid-cols-[1fr_240px] gap-10 items-center p-6 sm:p-8"
+                      : "p-6 sm:p-8"
+                  }
+                >
+                <div>
                   <div className="flex items-center gap-4 mb-4">
                     {"logoType" in featuredProject &&
                     featuredProject.logoType === "crowdanswer" ? (
@@ -187,21 +197,31 @@ export default function Projects() {
                       </p>
                     </div>
                   </div>
-                  <p className="text-muted mb-6">
+                  <p className="text-content text-base leading-relaxed mb-5">
                     {featuredProject.description}
                   </p>
 
+                  {"metrics" in featuredProject && featuredProject.metrics && (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {featuredProject.metrics.map((m) => (
+                        <span
+                          key={m}
+                          className="px-3 py-1 rounded-full text-xs font-semibold text-[var(--accent-text)] border border-[rgba(var(--glow-primary),0.35)] bg-[rgba(var(--glow-primary),0.08)] shadow-[0_0_14px_-6px_rgba(var(--glow-primary),0.8)]"
+                        >
+                          {m}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
                   <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-foreground mb-3">
-                      Key Features
-                    </h4>
-                    <ul className="grid sm:grid-cols-2 gap-2">
+                    <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
                       {featuredProject.features?.map((feature, i) => (
                         <li
                           key={i}
                           className="flex items-start gap-2 text-sm text-muted"
                         >
-                          <span className="text-faint">•</span>
+                          <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--accent-text)] shadow-[0_0_6px_rgba(var(--glow-primary),0.9)]" />
                           {feature}
                         </li>
                       ))}
@@ -245,7 +265,7 @@ export default function Projects() {
                         href={featuredProject.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-md text-sm hover:bg-accent-hover active:scale-95 transition-all duration-200 shadow-[0_0_15px_var(--accent-glow-medium)] hover:shadow-[0_0_25px_var(--accent-glow-stronger)]"
+                        className="btn-glow flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold active:scale-95 transition-all duration-200"
                       >
                         <ExternalLink size={16} />
                         Live Demo
@@ -271,6 +291,22 @@ export default function Projects() {
                       </a>
                     )}
                   </div>
+                </div>
+                {"screenshot" in featuredProject && featuredProject.screenshot && (
+                  <div className="hidden lg:flex justify-center">
+                    <div className="relative w-[220px] rounded-[2.2rem] border border-white/15 bg-black p-2 shadow-[0_30px_60px_-20px_rgba(var(--glow-secondary),0.45),0_0_50px_-15px_rgba(var(--glow-primary),0.6)]">
+                      <div className="relative aspect-[390/844] overflow-hidden rounded-[1.7rem]">
+                        <Image
+                          src={featuredProject.screenshot}
+                          alt={`${featuredProject.title} app screenshot`}
+                          fill
+                          sizes="220px"
+                          className="object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
                 </div>
               </div>
             </motion.div>
@@ -306,15 +342,24 @@ export default function Projects() {
                       <ExternalLink size={18} />
                     </a>
                   )}
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 border border-border rounded-md hover:border-muted hover:bg-surface hover:text-foreground active:scale-95 transition-all duration-200"
-                    title="Repository"
-                  >
-                    <Github size={18} />
-                  </a>
+                  {project.github ? (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 border border-border rounded-md hover:border-muted hover:bg-surface hover:text-foreground active:scale-95 transition-all duration-200"
+                      title="Repository"
+                    >
+                      <Github size={18} />
+                    </a>
+                  ) : (
+                    <span
+                      className="px-2 py-1 border border-border rounded-md text-xs font-mono text-faint"
+                      title="Private repository, ask me for a walkthrough"
+                    >
+                      Private repo
+                    </span>
+                  )}
                 </div>
               </div>
               {"subtitle" in project && project.subtitle && (

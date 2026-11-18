@@ -8,12 +8,24 @@ import { Building2, Calendar, MapPin } from "lucide-react";
 
 const experiences = [
   {
-    title: "PFE Intern (Projet de Fin d'Études)",
-    company: "Awel",
-    location: "Djerba, Tunisia",
-    period: "January 2025 – June 2025",
+    title: "Full-Stack Developer Intern",
+    company: "Saboura",
+    location: "Sidi Bouzid, Tunisia",
+    period: "May 2025 – July 2025",
     description: [
-      "Built Soukify, a multi-vendor e-commerce platform with 70% backend and 30% frontend development focus",
+      "Designed and built Pointage, a smart attendance and time-tracking platform, from scratch as the sole developer",
+      "QR/NFC check-in with duplicate-scan prevention and role-based dashboards for HR and team leads",
+      "Exportable analytics (CSV/PDF), automated email summaries, and configurable schedules and holidays",
+    ],
+    technologies: ["ASP.NET Core Web API", "C#", "Entity Framework", "PostgreSQL", "Vue.js 3", "Docker"],
+  },
+  {
+    title: "Full-Stack Developer Intern (PFE)",
+    company: "AWEL",
+    location: "Djerba, Tunisia",
+    period: "February 2025 – June 2025",
+    description: [
+      "Designed and shipped Soukify, a 33-entity multi-vendor B2B marketplace, as the sole developer (backend-led: ASP.NET Core API + Vue 3 front end)",
       "Implemented real-time features using SignalR for live notifications, chat, and inventory updates",
       "Developed comprehensive modules: product catalog, vendor management, order processing, and JWT/RBAC authentication",
       "Conducted extensive integration testing and manual QA to identify edge cases and missing features",
@@ -23,7 +35,7 @@ const experiences = [
   {
     title: "Backend Developer Intern",
     company: "Bank Zitouna",
-    location: "Tunis, Tunisia",
+    location: "Sidi Bouzid, Tunisia",
     period: "January 2024 – February 2024",
     description: [
       "Developed a PHP-based money transfer platform, handling secure transactions and user data management",
@@ -33,16 +45,15 @@ const experiences = [
     technologies: ["PHP", "MySQL", "REST API", "Agile"],
   },
   {
-    title: "Frontend Developer Intern",
+    title: "Intern",
     company: "Tunisie Télécom",
-    location: "Tunis, Tunisia",
+    location: "Sidi Bouzid, Tunisia",
     period: "January 2023 – February 2023",
     description: [
-      "Built a Vue.js application for user account creation, incorporating JWT authentication for secure session management",
-      "Enhanced UI/UX elements using modern frontend practices, resulting in an intuitive interface for end-users",
-      "Worked on task management features, improving workflow efficiency through practical project iterations",
+      "Field internship on telecommunications infrastructure: visited and maintained network sites across the region",
+      "Worked with switching equipment and supported 2G/3G/4G network operations",
     ],
-    technologies: ["Vue.js", "JWT", "JavaScript", "CSS"],
+    technologies: ["Telecom infrastructure", "Networking", "2G/3G/4G"],
   },
 ];
 

@@ -3,10 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import MotionProvider from "@/components/MotionProvider";
-import DevOgWarning from "@/components/DevOgWarning";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import BackToTop from "@/components/BackToTop";
+import Spotlight from "@/components/Spotlight";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 const title = "Souhaib Harrabi | Full Stack & Mobile Developer";
 const description =
-  "Full Stack Developer specializing in Flutter, Supabase, ASP.NET Core, and Vue.js. Building CrowdAnswer — a social Q&A mobile app. Open to roles in Tunis & remote.";
+  "Full Stack Developer specializing in Flutter, Supabase, ASP.NET Core, and Vue.js. Built CrowdAnswer, DUO and Soukify. Open to remote roles.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://harrabiportfolio.vercel.app"),
@@ -32,8 +32,7 @@ export const metadata: Metadata = {
     "Vue.js",
     "React",
     "TypeScript",
-    "Tunis",
-    "Tunisia",
+    "Remote",
     "Flutter",
     "Supabase",
     "CrowdAnswer",
@@ -83,9 +82,9 @@ export default function RootLayout({
         <MotionProvider>
           <Navigation />
           <BackToTop />
+          <Spotlight />
           {children}
         </MotionProvider>
-        <DevOgWarning />
         <Analytics />
         <SpeedInsights />
       </body>

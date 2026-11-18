@@ -10,7 +10,7 @@ import {
   Mail,
   Github,
   Linkedin,
-  MapPin,
+  Globe,
   Loader2,
   CheckCircle,
   AlertCircle,
@@ -38,9 +38,9 @@ const contactInfo = [
     external: true,
   },
   {
-    icon: MapPin,
-    label: "Location",
-    value: "Tunis, Tunisia",
+    icon: Globe,
+    label: "Availability",
+    value: "Open to remote roles",
     href: null,
   },
 ];
@@ -295,7 +295,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-white bg-accent hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 shadow-[0_0_20px_var(--accent-glow-soft)] hover:shadow-[0_0_30px_var(--accent-glow-strong)] transition-all duration-200 rounded-lg"
+                className="btn-glow w-full flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all duration-200 rounded-lg"
               >
                 {status === "loading" ? (
                   <>

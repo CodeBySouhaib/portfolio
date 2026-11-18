@@ -5,55 +5,40 @@ import { useInView } from "framer-motion";
 import { getTransition } from "@/lib/motion";
 import { useRef } from "react";
 
+// The stack I ship with, each tied to the project that proves it.
+const coreStack = [
+  { name: "Flutter", note: "CrowdAnswer" },
+  { name: "ASP.NET Core", note: "Soukify · Pointage" },
+  { name: "Vue.js 3", note: "Soukify · Pointage" },
+  { name: "React + TypeScript", note: "DUO" },
+  { name: "PostgreSQL", note: "Every project" },
+  { name: "Supabase", note: "CrowdAnswer" },
+];
+
 const skillCategories = [
-  {
-    title: "Languages",
-    skills: ["C#", "JavaScript", "TypeScript", "Dart", "PHP", "Python", "Java", "Kotlin"],
-  },
+  { title: "Languages", skills: ["C#", "TypeScript", "JavaScript", "Dart", "PHP"] },
   {
     title: "Backend & APIs",
-    skills: [
-      "ASP.NET Core",
-      "Entity Framework",
-      "REST APIs",
-      "JWT Auth",
-      "RBAC",
-      "SignalR",
-      "Node.js",
-      "Spring Boot",
-    ],
+    skills: ["ASP.NET Core", "Entity Framework", "SignalR", "REST APIs", "JWT / RBAC", "Node.js"],
   },
-  {
-    title: "Frontend",
-    skills: [
-      "Vue.js 3",
-      "React.js",
-      "Next.js",
-      "Pinia",
-      "Tailwind CSS",
-      "HTML5/CSS3",
-    ],
-  },
-  {
-    title: "Mobile",
-    skills: ["Flutter", "React Native", "Capacitor"],
-  },
-  {
-    title: "Databases",
-    skills: ["PostgreSQL", "Neon", "MySQL", "MongoDB", "Supabase", "Firebase"],
-  },
+  { title: "Frontend", skills: ["Vue.js 3", "Pinia", "React", "Next.js", "Tailwind CSS"] },
+  { title: "Mobile", skills: ["Flutter", "GetX", "Capacitor"] },
+  { title: "Data", skills: ["PostgreSQL", "Supabase (Realtime, RLS)", "Neon", "MySQL"] },
   {
     title: "DevOps & Tools",
-    skills: [
-      "Docker",
-      "Git/GitHub",
-      "GitHub Actions",
-      "Cloudinary",
-      "Linux",
-      "Postman",
-      "Swagger",
-    ],
+    skills: ["Docker", "GitHub Actions", "Vercel", "Cloudinary", "Git", "Postman", "Swagger"],
   },
+];
+
+const alsoWorkedWith = [
+  "Kotlin (Jetpack Compose)",
+  "React Native",
+  "Java",
+  "Spring Boot",
+  "Python",
+  "MongoDB",
+  "Firebase",
+  "Linux",
 ];
 
 export default function Skills() {
@@ -62,7 +47,7 @@ export default function Skills() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="skills" className="py-32 bg-background relative overflow-hidden">
+    <section id="skills" className="py-32 relative">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
@@ -70,7 +55,7 @@ export default function Skills() {
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={getTransition(reduceMotion, { duration: 0.5 })}
-          className="mb-16"
+          className="mb-14"
         >
           <p className="editorial-label mb-3">Expertise</p>
           <h2 className="editorial-heading text-4xl sm:text-5xl text-foreground">
@@ -79,8 +64,30 @@ export default function Skills() {
           <div className="editorial-divider mt-6" />
         </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
+        {/* Core stack */}
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.1 })}
+          className="mb-14"
+        >
+          <p className="text-sm text-muted mb-4">What I ship with</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {coreStack.map((s) => (
+              <div
+                key={s.name}
+                className="box-hover rounded-xl border border-[rgba(var(--glow-primary),0.25)] p-5"
+                style={{ background: "var(--card-gradient)" }}
+              >
+                <div className="text-lg font-bold text-foreground">{s.name}</div>
+                <div className="mt-1 text-xs font-mono text-[var(--accent-text)]">{s.note}</div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Full toolbox */}
+        <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
@@ -88,17 +95,17 @@ export default function Skills() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={getTransition(reduceMotion, {
                 duration: 0.5,
-                delay: categoryIndex * 0.08,
+                delay: 0.2 + categoryIndex * 0.06,
               })}
               className="border border-border rounded-xl p-5 box-hover"
-              style={{ background: 'var(--card-gradient)' }}
+              style={{ background: "var(--card-gradient)" }}
             >
               <p className="editorial-label mb-4">{category.title}</p>
               <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1.5 bg-surface border border-border rounded text-sm text-muted"
+                    className="px-3 py-1.5 bg-white/[0.03] border border-white/10 rounded-md text-sm text-content"
                   >
                     {skill}
                   </span>
@@ -108,24 +115,19 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Primary Focus */}
+        {/* Also worked with */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.5 })}
-          className="mt-20"
+          transition={getTransition(reduceMotion, { duration: 0.5, delay: 0.6 })}
+          className="mt-10 text-center"
         >
-          <p className="editorial-label mb-4 text-center">Primary Focus</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {["ASP.NET Core", "Vue.js 3", "PostgreSQL", "Docker"].map((skill) => (
-              <span
-                key={skill}
-                className="px-4 py-2 border border-border rounded text-sm text-muted"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
+          <p className="text-xs font-mono uppercase tracking-widest text-muted mb-3">
+            Also worked with
+          </p>
+          <p className="text-sm text-muted">
+            {alsoWorkedWith.join("  ·  ")}
+          </p>
         </motion.div>
       </div>
     </section>
