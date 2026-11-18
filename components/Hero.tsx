@@ -75,8 +75,8 @@ export default function Hero() {
                 <ArrowRight size={14} />
               </a>
               <a
-                href="/Souhaib_Harrabi_CV.pdf"
-                download="Souhaib_Harrabi_CV.pdf"
+                href="/Souhaib_Harrabi_CV_2026.pdf"
+                download="Souhaib_Harrabi_CV_2026.pdf"
                 className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium rounded-lg hover:border-muted hover:bg-surface active:scale-95 transition-all duration-200"
               >
                 <Download size={14} />
